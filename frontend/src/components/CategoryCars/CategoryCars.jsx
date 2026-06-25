@@ -13,7 +13,7 @@ function CategoryCars({ category }) {
     const fetchCars = async () => {
       try {
         setLoading(true);
-        console.log("=============");
+
         const res = await axios.get(`${GET_ALL_CARS}?body_type=${category}`);
         setLoading(false);
         if (res && res.data && res.data.data?.length > 0) {

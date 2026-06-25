@@ -34,7 +34,6 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       <div className="user-list">
-        {console.log("filteredUsers : ", filteredUsers)}
         {filteredUsers &&
           filteredUsers.length > 0 &&
           filteredUsers.map((user) => (

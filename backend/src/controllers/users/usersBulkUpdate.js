@@ -14,7 +14,6 @@ module.exports.usersBulkUpdate = async (users) => {
       }
     );
   } catch (error) {
-    console.log("Error while users bulk update: ", error);
     return error;
   }
 };

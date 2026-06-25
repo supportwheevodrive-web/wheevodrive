@@ -131,7 +131,7 @@ function Dashboard({ dealerId }) {
             setStats(res.data);
           }
         } catch (error) {
-          console.log(error);
+          return error;
         } finally {
           setLoading(false);
         }
@@ -151,7 +151,7 @@ function Dashboard({ dealerId }) {
             setGraphData(res.data.data || []);
           }
         } catch (error) {
-          console.log("Error while fetching graph details : ", error);
+          return error;
         }
       };
       fetchGraphStats();

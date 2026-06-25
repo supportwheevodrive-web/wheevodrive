@@ -83,7 +83,7 @@ const PaymentForm = ({ plan, planDetails }) => {
                 navigate(`/payment-success/${plan}`);
               }
             } catch (error) {
-              console.log("Error while subsribing plans : ", error);
+              return error;
             }
           };
           handleSubscribePan();

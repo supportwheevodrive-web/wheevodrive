@@ -6,8 +6,6 @@ const client = createClient({
   accessToken: process.env.REACT_APP_CONTENTFULL_ACCESS_TOKEN || "1234",
 });
 
-console.log("client--------------", process.env.REACT_APP_CONTENTFULL_SPACEID);
-
 export default client;
 
 export const fetchEntries = async () => {
