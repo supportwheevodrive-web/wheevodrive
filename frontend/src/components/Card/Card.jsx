@@ -53,7 +53,14 @@ function Card({ car, editable = false, category }) {
 
         {category && <span className="car-card__badge">{category}</span>}
 
-        <button className="car-card__favorite" onClick={addToFav}>
+        <button
+          className="car-card__favorite"
+          onClick={() => {
+            if (!editable) {
+              addToFav();
+            }
+          }}
+        >
           {!editable && (
             <FaHeart
               className={

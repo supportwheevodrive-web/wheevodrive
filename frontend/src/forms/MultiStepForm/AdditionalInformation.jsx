@@ -34,7 +34,7 @@ function AdditionalInformation() {
   const removeFeature = (feature) => {
     setFeatures(features.filter((f) => f !== feature));
   };
- 
+
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -72,7 +72,7 @@ function AdditionalInformation() {
         <Form className="details__wrapper">
           <div className="form__item">
             <label>Description</label>
-            <Field name="description" as={Input} />
+            <Field name="description" as={Input} style={{ padding: "15px" }} />
             <ErrorMessage
               name="description"
               component="p"
@@ -81,7 +81,7 @@ function AdditionalInformation() {
           </div>
           <div className="form__item mt-4">
             <label>Location</label>
-            <Field name="place" as={Input} />
+            <Field name="place" as={Input} style={{ padding: "15px" }} />
             <ErrorMessage
               name="place"
               component="p"
@@ -96,6 +96,7 @@ function AdditionalInformation() {
               beforeUpload={() => false}
               onChange={handleImageUpload}
               showUploadList={false}
+              style={{ padding: "15px" }}
             >
               <Button icon={<UploadOutlined />}>Select Images</Button>
             </Upload>
@@ -123,6 +124,7 @@ function AdditionalInformation() {
                 value={featureInput}
                 onChange={(e) => setFeatureInput(e.target.value)}
                 onPressEnter={addFeature}
+                style={{ padding: "15px" }}
               />
               <Button icon={<PlusOutlined />} onClick={addFeature} />
             </div>
@@ -133,10 +135,14 @@ function AdditionalInformation() {
                   closable
                   onClose={() => removeFeature(feature)}
                   style={{
-                    backgroundColor: "#30bfa1",
-                    padding: "7px",
+                    backgroundColor: "#ff0030",
                     color: "#fff",
                     borderRadius: "20px",
+                    padding: "4px 12px", // Adjusted padding for better proportions
+                    display: "inline-flex",
+                    alignItems: "center",
+                    border: "none", // Removes default AntD border
+                    fontSize: "14px",
                   }}
                 >
                   {feature}
@@ -160,7 +166,7 @@ function AdditionalInformation() {
               onClick={handleSubmit}
               style={{
                 borderRadius: 8,
-                background: "rgb(96, 108, 188)",
+                background: "#ff0030",
                 color: "#fff",
                 padding: "20px 32px",
               }}

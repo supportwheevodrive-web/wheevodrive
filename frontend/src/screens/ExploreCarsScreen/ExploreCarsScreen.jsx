@@ -17,6 +17,8 @@ import { GET_ALL_CARS } from "../../config/api";
 import Carousel from "../../components/Carousel/Carousel";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CloseIcon from "@mui/icons-material/Close";
+import { FaThLarge, FaList } from "react-icons/fa";
+import { HiOutlineViewGrid, HiOutlineViewList } from "react-icons/hi";
 
 function ExploreCarsScreen() {
   const [order, setOrder] = useState("desc");
@@ -29,6 +31,7 @@ function ExploreCarsScreen() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const brand = searchParams.get("brand");
+  const [viewMode, setViewMode] = useState("grid");
   const [pagination, setPagination] = useState({
     page: 1,
     pageSize: 12,
@@ -110,6 +113,7 @@ function ExploreCarsScreen() {
 
   const handlePageChange = (event, value) => {
     setPagination((prev) => ({ ...prev, page: value }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const getSortValue = () => {
@@ -134,7 +138,6 @@ function ExploreCarsScreen() {
   return (
     <div className="explore-cars-screen">
       <div className="layout-container">
-        {/* Desktop Filter - Only show on desktop */}
         {!isMobile && (
           <div className="filter-column">
             <div className="filter-section">
@@ -149,12 +152,15 @@ function ExploreCarsScreen() {
 
         <div className="content-column">
           <Carousel />
+
           <div className="content-wrapper">
             <div className="sort-bar">
               <div className="sort-bar-left">
                 {!isMobile && (
                   <span className="sort-bar-label">
-                    {pagination.total > 0 ? `${pagination.total} listings` : ""}
+                    {pagination.total > 0
+                      ? `${pagination.total.toLocaleString()} vehicles found`
+                      : "No vehicles found"}
                   </span>
                 )}
                 {isMobile && (
@@ -163,7 +169,7 @@ function ExploreCarsScreen() {
                     onClick={() => setIsFilterOpen(true)}
                   >
                     <FilterAltIcon />
-                    <span>Filters</span>
+                    <span>Filter</span>
                     {getActiveFiltersCount() > 0 && (
                       <span className="mobile-filter-badge">
                         {getActiveFiltersCount()}
@@ -172,22 +178,52 @@ function ExploreCarsScreen() {
                   </button>
                 )}
               </div>
-              <FormControl size="small" className="sort-select-container">
-                <InputLabel>Sort by</InputLabel>
-                <Select
-                  value={getSortValue()}
-                  onChange={handleSortChange}
-                  label="Sort by"
-                >
-                  <MenuItem value="price_asc">Price: Low to High</MenuItem>
-                  <MenuItem value="price_desc">Price: High to Low</MenuItem>
-                  <MenuItem value="latest">Latest</MenuItem>
-                  <MenuItem value="oldest">Oldest</MenuItem>
-                </Select>
-              </FormControl>
+
+              <div className="sort-bar-right">
+                {!isMobile && (
+                  <div className="view-toggle">
+                    <button
+                      className={`view-btn ${
+                        viewMode === "grid" ? "view-active" : ""
+                      }`}
+                      onClick={() => setViewMode("grid")}
+                      aria-label="Grid view"
+                    >
+                      <HiOutlineViewGrid />
+                    </button>
+                    <button
+                      className={`view-btn ${
+                        viewMode === "list" ? "view-active" : ""
+                      }`}
+                      onClick={() => setViewMode("list")}
+                      aria-label="List view"
+                    >
+                      <HiOutlineViewList />
+                    </button>
+                  </div>
+                )}
+
+                <FormControl size="small" className="sort-select-container">
+                  <InputLabel>Sort by</InputLabel>
+                  <Select
+                    value={getSortValue()}
+                    onChange={handleSortChange}
+                    label="Sort by"
+                  >
+                    <MenuItem value="latest">Newest First</MenuItem>
+                    <MenuItem value="oldest">Oldest First</MenuItem>
+                    <MenuItem value="price_asc">Price: Low to High</MenuItem>
+                    <MenuItem value="price_desc">Price: High to Low</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
             </div>
 
-            <div className="cards-grid">
+            <div
+              className={`cards-grid ${
+                viewMode === "list" ? "cards-list" : ""
+              }`}
+            >
               {loading ? (
                 <div className="loader-container">
                   <Loader />
@@ -209,17 +245,37 @@ function ExploreCarsScreen() {
 
             {cars.length > 0 && (
               <div className="pagination-container">
+                <div className="pagination-info">
+                  <span>
+                    Showing {(pagination.page - 1) * pagination.pageSize + 1} -{" "}
+                    {Math.min(
+                      pagination.page * pagination.pageSize,
+                      pagination.total
+                    )}{" "}
+                    of {pagination.total.toLocaleString()} vehicles
+                  </span>
+                </div>
                 <Pagination
                   count={pagination.pages}
                   page={pagination.page}
                   onChange={handlePageChange}
+                  color="primary"
+                  shape="rounded"
                   sx={{
+                    "& .MuiPaginationItem-root": {
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 500,
+                      fontSize: "0.875rem",
+                    },
                     "& .MuiPaginationItem-root.Mui-selected": {
-                      background: "#111827",
-                      color: "#fff",
+                      background: "var(--primary)",
+                      color: "var(--white)",
+                      "&:hover": {
+                        background: "var(--primary-dark)",
+                      },
                     },
                     "& .MuiPaginationItem-root:hover": {
-                      background: "#f4f6f9",
+                      background: "var(--light)",
                     },
                   }}
                 />
@@ -229,7 +285,6 @@ function ExploreCarsScreen() {
         </div>
       </div>
 
-      {/* Mobile Filter Bottom Sheet */}
       {isMobile && (
         <Filter
           onFilterChange={applyFilters}

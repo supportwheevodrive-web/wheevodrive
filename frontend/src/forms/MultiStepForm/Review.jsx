@@ -167,7 +167,7 @@ function Review() {
           className="w-25"
           style={{
             borderRadius: 8,
-            background: "rgb(96, 108, 188)",
+            background: "#ff0030",
             color: "#fff",
             padding: "10px 42px",
             border: "none",

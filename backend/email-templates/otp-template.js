@@ -5,7 +5,7 @@ module.exports.sentOTPTemplate = (otp) => {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>CarAuras</title>
+    <title>WheevoDrive</title>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
@@ -420,7 +420,7 @@ module.exports.sentOTPTemplate = (otp) => {
             color: #434343;
           "
         >
-          CarAuras 
+          WheevoDrive 
         </p>
         <p style="margin: 0; margin-top: 8px; color: #434343">
           Best Used Cars website in Kerala
@@ -455,7 +455,7 @@ module.exports.sentOTPTemplate = (otp) => {
           //   />
           // </a>
           <a
-            href="https://www.youtube.com/@carauras"
+            href="https://www.youtube.com/@WheevoDrive"
             target="_blank"
             style="display: inline-block; margin-left: 8px"
           >
@@ -466,7 +466,7 @@ module.exports.sentOTPTemplate = (otp) => {
           /></a>
         </div>
         <p style="margin: 0; margin-top: 16px; color: #434343">
-          Copyright © 2025 CarAuras. All rights reserved.
+          Copyright © 2025 WheevoDrive. All rights reserved.
         </p>
       </footer>
     </div>

@@ -77,7 +77,7 @@
 }
 
 .search-icon {
-  color: #606cbc;
+  color: var(--primary);
   margin-right: 8px;
 }
 
@@ -208,5 +208,5 @@
 }
 
 .accordion-icon {
-  color: #606cbc;
+  color: var(--primary);
 }

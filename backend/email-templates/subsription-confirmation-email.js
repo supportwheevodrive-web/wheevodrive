@@ -9,7 +9,7 @@ module.exports.subscriptionConfirmationEmail = (
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>CarAuras</title>
+    <title>WheevoDrive</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
@@ -140,7 +140,7 @@ module.exports.subscriptionConfirmationEmail = (
                                         <tr>
                                           <td align="center">
                                             <h1 style="margin: 16px 0; font-size: 22px">
-                                              Welcome to CarAuras Premium!
+                                              Welcome to WheevoDrive Premium!
                                             </h1>
                                             <p style="font-size: 14px">
                                               Hi, ${userName}, Your ${planType} Plan subscription has been successfully activated.
@@ -214,7 +214,7 @@ module.exports.subscriptionConfirmationEmail = (
             color: #434343;
           "
         >
-          CarAuras 
+          WheevoDrive 
         </p>
         <p style="margin: 0; margin-top: 8px; color: #434343">
           Best Used Cars website in Kerala
@@ -262,7 +262,7 @@ module.exports.subscriptionConfirmationEmail = (
         //   </a>
         // </div>
         <p style="margin: 0; margin-top: 16px; color: #434343">
-          Copyright © 2025 CarAuras. All rights reserved.
+          Copyright © 2025 WheevoDrive. All rights reserved.
         </p>
       </footer>
     </div>

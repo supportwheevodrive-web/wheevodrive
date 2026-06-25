@@ -10,7 +10,7 @@ module.exports.Crons = () => {
   cron.schedule("0 0 * * *", async () => {
     let users = await findExpiredUsers();
     if (users.length > 0) {
-      const subject = "Your CarAuras Subscription is Expiring Today";
+      const subject = "Your WheevoDrive Subscription is Expiring Today";
       await usersBulkUpdate(users);
       for (const user of users) {
         const htmlContent = createExpirationEmail(user.username);
@@ -18,7 +18,7 @@ module.exports.Crons = () => {
         await sendEmail(
           from,
           subject,
-          "Your subscription plan is expiring today. Please visit https://carauras.com/premium-plans to renew.",
+          "Your subscription plan is expiring today. Please visit https://WheevoDrive.com/premium-plans to renew.",
           htmlContent,
           user.email
         );

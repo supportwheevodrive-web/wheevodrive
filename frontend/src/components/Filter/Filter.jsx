@@ -164,21 +164,6 @@ function Filter({ onFilterChange, isOpen, onClose }) {
             </div>
           </div>
 
-          <div className="quick-stats-sheet">
-            <div className="stat-card-sheet">
-              <span className="stat-number-sheet">{filteredBrands.length}</span>
-              <span className="stat-label-sheet">Brands</span>
-            </div>
-            <div className="stat-card-sheet">
-              <span className="stat-number-sheet">{years.length}</span>
-              <span className="stat-label-sheet">Years</span>
-            </div>
-            <div className="stat-card-sheet">
-              <span className="stat-number-sheet">{carBodyTypes.length}</span>
-              <span className="stat-label-sheet">Body Types</span>
-            </div>
-          </div>
-
           <div className="filter-sections-sheet">
             <div className="filter-section-sheet">
               <div

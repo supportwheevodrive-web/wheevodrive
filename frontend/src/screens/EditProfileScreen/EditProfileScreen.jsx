@@ -12,11 +12,10 @@ import {
   Email,
   Phone,
   Store,
-  Edit,
   Save,
-  Close,
   CheckCircle,
   Cancel,
+  ArrowForwardIos,
 } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -28,7 +27,6 @@ function EditProfileScreen() {
   const [loading, setLoading] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [activeSection, setActiveSection] = useState("personal");
-  const [showSuccess, setShowSuccess] = useState(false);
   const [userData, setUserData] = useState({
     first_name: "",
     last_name: "",
@@ -95,27 +93,16 @@ function EditProfileScreen() {
   const handleDiscardChanges = async () => {
     Swal.fire({
       title: "Discard Changes?",
-      text: "You'll lose all unsaved changes to your profile",
+      text: "You'll lose all unsaved changes",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#667eea",
-      cancelButtonColor: "#ef4444",
+      confirmButtonColor: "#ff0030",
+      cancelButtonColor: "#1a1a1a",
       confirmButtonText: "Yes, discard",
-      cancelButtonText: "Cancel",
-      customClass: {
-        popup: "swal-popup",
-      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         setUserData(user);
         setIsEdited(false);
-        Swal.fire({
-          title: "Changes Discarded",
-          text: "Your profile has been reset to the last saved version",
-          icon: "info",
-          timer: 1500,
-          showConfirmButton: false,
-        });
       }
     });
   };
@@ -126,13 +113,12 @@ function EditProfileScreen() {
       if (user) {
         setLoading(true);
         await axios.patch(`${UPDATE_PROFILE_URL}/${user._id}`, userData);
-        setShowSuccess(true);
         setIsEdited(false);
         Swal.fire({
           title: "Success!",
-          text: "Your profile has been updated successfully",
+          text: "Profile updated successfully",
           icon: "success",
-          confirmButtonColor: "#667eea",
+          confirmButtonColor: "#ff0030",
           timer: 2000,
         }).then(() => {
           window.location.reload();
@@ -141,19 +127,14 @@ function EditProfileScreen() {
     } catch (error) {
       Swal.fire({
         title: "Error",
-        text: "Failed to update profile. Please try again.",
+        text: "Failed to update profile",
         icon: "error",
-        confirmButtonColor: "#667eea",
+        confirmButtonColor: "#ff0030",
       });
     } finally {
       setLoading(false);
     }
   };
-
-  const sections = [
-    { id: "personal", label: "Personal Info", icon: Person },
-    { id: "business", label: "Business Details", icon: Business },
-  ];
 
   const InputField = ({
     icon: Icon,
@@ -162,184 +143,119 @@ function EditProfileScreen() {
     type = "text",
     placeholder,
     required = false,
-    fullWidth = false,
   }) => (
-    <div className={`input-group ${fullWidth ? "full-width" : ""}`}>
-      <label>
-        <Icon className="input-icon" />
-        {label}
-        {required && <span className="required-star">*</span>}
+    <div className="modern-input-group">
+      <label className="modern-label">
+        {label} {required && <span>*</span>}
       </label>
-      {type === "textarea" ? (
-        <textarea
-          name={name}
-          value={userData[name]}
-          onChange={handleChange}
-          placeholder={placeholder}
-          rows="3"
-        />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          value={userData[name]}
-          onChange={handleChange}
-          placeholder={placeholder}
-        />
-      )}
+      <div className="input-wrapper">
+        <Icon className="input-icon" />
+        {type === "textarea" ? (
+          <textarea
+            name={name}
+            value={userData[name]}
+            onChange={handleChange}
+            placeholder={placeholder}
+            rows="3"
+          />
+        ) : (
+          <input
+            type={type}
+            name={name}
+            value={userData[name]}
+            onChange={handleChange}
+            placeholder={placeholder}
+          />
+        )}
+      </div>
     </div>
   );
 
   return (
-    <motion.div
-      className="profile-edit-container"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className="settings-page">
       <LoadingOverlay loading={loading} />
 
-      <div className="profile-card">
-        {/* Header */}
-        <div className="profile-header">
-          <div className="header-content">
-            <h1>
-              <Edit className="header-icon" />
-              Account Settings
-            </h1>
-            <p>Manage your profile information and preferences</p>
-          </div>
-          {isEdited && (
-            <motion.div
-              className="unsaved-badge"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-            >
-              <CheckCircle />
-              <span>Unsaved changes</span>
-            </motion.div>
-          )}
-        </div>
-
-        <div className="profile-content">
-          {/* Avatar Section */}
-          <div className="avatar-section">
-            <motion.div
-              className="avatar-wrapper"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className="avatar-container">
-                <img
-                  src={userData.profile_picture}
-                  alt="Profile"
-                  className="avatar"
-                />
-                <div className="avatar-overlay">
-                  <Upload
-                    listType="picture"
-                    multiple={false}
-                    beforeUpload={() => false}
-                    onChange={handleImageUpload}
-                    showUploadList={false}
-                  >
-                    <Button className="avatar-upload-btn">
-                      <UploadOutlined />
-                    </Button>
-                  </Upload>
-                </div>
-              </div>
-              <div className="avatar-actions">
-                <Upload
-                  listType="picture"
-                  multiple={false}
-                  beforeUpload={() => false}
-                  onChange={handleImageUpload}
-                  showUploadList={false}
-                >
-                  <Button className="upload-btn">
-                    <UploadOutlined />
-                    Change Photo
-                  </Button>
-                </Upload>
-                <button className="remove-btn" onClick={handleRemoveImage}>
-                  Remove
+      <div className="settings-container">
+        <aside className="settings-sidebar">
+          <div className="sidebar-profile">
+            <div className="sidebar-avatar-container">
+              <img src={userData.profile_picture} alt="Profile" />
+              <Upload
+                beforeUpload={() => false}
+                onChange={handleImageUpload}
+                showUploadList={false}
+              >
+                <button className="avatar-edit-fab">
+                  <UploadOutlined style={{ fontSize: "16px" }} />
                 </button>
-              </div>
-            </motion.div>
-
-            <div className="avatar-info">
-              <h3>
-                {user?.first_name} {user?.last_name}
-              </h3>
-              <div
-                className={`account-type-badge ${
-                  userData.role === "company" ? "business" : "personal"
-                }`}
-              >
-                {userData.role === "company"
-                  ? "Business Account"
-                  : "Personal Account"}
-              </div>
-              <div className="profile-stats">
-                <div className="stat-item">
-                  <span className="stat-label">Member Since</span>
-                  <span className="stat-value">2024</span>
-                </div>
-                <div className="stat-divider"></div>
-                <div className="stat-item">
-                  <span className="stat-label">Listings</span>
-                  <span className="stat-value">12</span>
-                </div>
-              </div>
+              </Upload>
             </div>
+            <h3>
+              {user?.first_name} {user?.last_name}
+            </h3>
+            <span className="role-tag">{userData.role}</span>
           </div>
 
-          {/* Section Tabs */}
-          <div className="section-tabs">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                className={`tab-btn ${
-                  activeSection === section.id ? "active" : ""
-                }`}
-                onClick={() => setActiveSection(section.id)}
-              >
-                <section.icon />
-                <span>{section.label}</span>
-              </button>
-            ))}
-          </div>
+          <nav className="settings-nav">
+            <button
+              className={`nav-item ${
+                activeSection === "personal" ? "active" : ""
+              }`}
+              onClick={() => setActiveSection("personal")}
+            >
+              <Person />
+              <span>Personal Info</span>
+              <ArrowForwardIos className="arrow" />
+            </button>
+            <button
+              className={`nav-item ${
+                activeSection === "business" ? "active" : ""
+              }`}
+              onClick={() => setActiveSection("business")}
+            >
+              <Business />
+              <span>Business Details</span>
+              <ArrowForwardIos className="arrow" />
+            </button>
+          </nav>
 
-          <form onSubmit={handleSubmit} className="profile-form">
+          <div className="sidebar-footer">
+            {isEdited && (
+              <div className="unsaved-status">
+                <CheckCircle />
+                <span>Unsaved changes</span>
+              </div>
+            )}
+          </div>
+        </aside>
+
+        <main className="settings-content">
+          <form onSubmit={handleSubmit} className="settings-form">
             <AnimatePresence mode="wait">
-              {/* Personal Details Section */}
               {activeSection === "personal" && (
                 <motion.div
                   key="personal"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.3 }}
-                  className="form-section"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="settings-section"
                 >
-                  <h2 className="section-title">
-                    <Person className="title-icon" />
-                    Personal Details
-                  </h2>
-                  <div className="form-grid">
+                  <div className="section-header">
+                    <h2>Personal Information</h2>
+                    <p>Update your personal details and contact info</p>
+                  </div>
+
+                  <div className="modern-grid">
                     <InputField
                       icon={Person}
                       label="First Name"
                       name="first_name"
-                      placeholder="Enter your first name"
                       required
                     />
                     <InputField
                       icon={Person}
                       label="Last Name"
                       name="last_name"
-                      placeholder="Enter your last name"
                       required
                     />
                     <InputField
@@ -347,7 +263,6 @@ function EditProfileScreen() {
                       label="Email Address"
                       name="email"
                       type="email"
-                      placeholder="Enter your email address"
                       required
                     />
                     <InputField
@@ -355,58 +270,56 @@ function EditProfileScreen() {
                       label="Phone Number"
                       name="phone"
                       type="tel"
-                      placeholder="Enter your phone number"
                       required
                     />
                   </div>
                 </motion.div>
               )}
 
-              {/* Business Details Section */}
               {activeSection === "business" && (
                 <motion.div
                   key="business"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.3 }}
-                  className="form-section"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="settings-section"
                 >
-                  <h2 className="section-title">
-                    <Business className="title-icon" />
-                    Business Information
-                  </h2>
-                  <div className="form-grid">
+                  <div className="section-header">
+                    <h2>Business Details</h2>
+                    <p>Configure your business identity and location</p>
+                  </div>
+
+                  <div className="modern-grid">
                     <InputField
                       icon={Business}
                       label="Business Name"
                       name="business_name"
-                      placeholder="Enter your business name"
                     />
                     <InputField
                       icon={LocationOn}
                       label="Location"
                       name="location"
-                      placeholder="Enter your location"
                     />
-                    <InputField
-                      icon={LocationOn}
-                      label="Business Address"
-                      name="address"
-                      type="textarea"
-                      placeholder="Enter your full business address"
-                      fullWidth
-                    />
-                    <div className="input-group checkbox-container full-width">
-                      <label className="checkbox-label">
+                    <div className="full-width">
+                      <InputField
+                        icon={LocationOn}
+                        label="Full Address"
+                        name="address"
+                        type="textarea"
+                      />
+                    </div>
+                    <div className="full-width">
+                      <label className="modern-checkbox">
                         <input
                           type="checkbox"
                           name="has_physical_store"
                           checked={userData.has_physical_store}
                           onChange={handleChange}
                         />
-                        <Store className="checkbox-icon" />
-                        <span>I have a physical store</span>
+                        <div className="checkbox-box">
+                          <Store className="check-icon" />
+                        </div>
+                        <span>I have a physical store location</span>
                       </label>
                     </div>
                   </div>
@@ -414,36 +327,34 @@ function EditProfileScreen() {
               )}
             </AnimatePresence>
 
-            {/* Form Actions */}
-            <div className="form-actions">
+            <div className="settings-actions">
               <button
                 type="button"
-                className="discard-btn"
+                className="btn-secondary"
                 onClick={handleDiscardChanges}
-                disabled={!isEdited}
+                disabled={!isEdited || loading}
               >
                 <Cancel />
-                Discard Changes
+                Discard
               </button>
               <button
                 type="submit"
-                className="save-btn"
-                disabled={loading || !isEdited}
+                className="btn-primary"
+                disabled={!isEdited || loading}
               >
                 {loading ? (
-                  <div className="loading-spinner-small"></div>
+                  <div className="spinner" />
                 ) : (
                   <>
-                    <Save />
-                    Save Changes
+                    <Save /> Save Changes
                   </>
                 )}
               </button>
             </div>
           </form>
-        </div>
+        </main>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

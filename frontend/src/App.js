@@ -34,7 +34,9 @@ import PaymentSuccess from "./screens/PaymentSuccess/PaymentSuccess";
 
 function Layout() {
   const location = useLocation();
-  const hideHeaderFooter = ["/signin", "/signup"].includes(location.pathname);
+  const hideHeaderFooter = ["/signin", "/signup", "/forgot-password"].includes(
+    location.pathname
+  );
   const { authUser, checkAuth, isCheckingAuth, onlineUsers, connectSocket } =
     useAuthStore();
 

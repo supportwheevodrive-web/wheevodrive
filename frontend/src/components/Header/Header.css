@@ -4,8 +4,6 @@
   box-sizing: border-box;
 }
 
-
-
 .header-container {
   position: sticky;
   top: 0;
@@ -50,46 +48,41 @@
   gap: 32px;
 }
 
-.logo a {
+.logo-container {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  font-size: 28px;
-  font-weight: 800;
-  background: var(--primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  min-width: 120px;
 }
 
-.logo-icon-wrapper {
-  background: var(--primary);
-  border-radius: 14px;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 14px rgba(230, 57, 70, 0.25);
-  transition: var(--transition);
+.brand {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1;
 }
 
-.logo a:hover .logo-icon-wrapper {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(230, 57, 70, 0.35);
+.brand img{
+  width: 280px;
+  height: 50px;
 }
 
-.logo-icon {
-  font-size: 28px;
-  color: white;
+.car-part {
+  color: var(--primary);
 }
 
-.logo span span {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.auras-part {
+  color: #ff0030;
+}
+
+.tagline {
+  font-size: 0.6rem;
+  letter-spacing: 2.5px;
+  color: #6b7280;
+  margin-top: 2px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .search-wrapper {
@@ -133,10 +126,6 @@
   font-weight: 500;
 }
 
-.search-bar input::placeholder {
-  color: var(--gray-light);
-  font-weight: 400;
-}
 
 .clear-search {
   background: none;
@@ -180,13 +169,11 @@
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     transform: scale(1);
     opacity: 1;
   }
-
   50% {
     transform: scale(1.08);
     opacity: 0.8;
@@ -212,7 +199,6 @@
     opacity: 0;
     transform: translateY(-20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -461,12 +447,6 @@
   color: var(--dark);
 }
 
-.action-btn:hover {
-  background: var(--primary-gradient);
-  color: var(--white);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(230, 57, 70, 0.3);
-}
 
 .action-btn svg {
   font-size: 22px;
@@ -501,7 +481,7 @@
 }
 
 .sell-btn {
-  background: var(--primary);
+  background: #ff0030;
   color: white;
   box-shadow: 0 4px 14px rgba(230, 57, 70, 0.35);
 }
@@ -519,7 +499,6 @@
 
 .login-btn:hover {
   background: var(--primary-gradient);
-  /* color: white; */
   border-color: transparent;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(230, 57, 70, 0.3);
@@ -548,7 +527,7 @@
 }
 
 .nav {
-  background: var(--dark);
+  background:#000;
   border-top: none;
   position: relative;
 }
@@ -590,6 +569,12 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+.nav-list li a.active {
+  background: #ff0030;
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 0, 48, 0.3);
+}
+
 .mobile-nav {
   position: fixed;
   top: 0;
@@ -615,6 +600,7 @@
   padding: 24px;
   border-bottom: 2px solid var(--primary);
   background: var(--white);
+  color: red;
 }
 
 .mobile-nav-header .logo {
@@ -627,6 +613,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: red;
 }
 
 .mobile-nav-header .logo svg {
@@ -719,6 +706,16 @@
   transition: var(--transition);
 }
 
+.mobile-nav-list li a.active {
+  background: rgba(230, 57, 70, 0.08);
+  color: var(--primary);
+  border-left: 4px solid var(--primary);
+}
+
+.active-icon {
+  color: var(--primary) !important;
+}
+
 .mobile-nav-list li a svg:first-child {
   font-size: 24px;
   color: var(--primary);
@@ -765,7 +762,6 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -858,16 +854,17 @@
     gap: 12px;
   }
 
-  .logo a {
-    font-size: 22px;
+  .logo-container {
+    min-width: 80px;
   }
 
-  .logo-icon-wrapper {
-    padding: 6px;
+  .brand {
+    font-size: 1.5rem;
   }
 
-  .logo-icon {
-    font-size: 22px;
+  .tagline {
+    font-size: 0.5rem;
+    letter-spacing: 1.5px;
   }
 
   .search-wrapper {
@@ -878,10 +875,10 @@
     max-width: 100%;
     background: var(--white);
     padding: 12px 20px;
-    transform: translateY(-100%);
+    transform: translateY(-120%);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1001;
     border-bottom: 2px solid var(--primary);
     box-shadow: var(--shadow);
@@ -891,6 +888,22 @@
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+  }
+
+  .search-wrapper.mobile-search-active .search-bar {
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px rgba(230, 57, 70, 0.15);
+  }
+
+  .search-wrapper .search-results {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    max-height: calc(100vh - 80px);
+    border: none;
+    box-shadow: var(--shadow-lg);
   }
 
   .sell-btn span,
@@ -927,15 +940,6 @@
     display: none;
   }
 
-  .search-results {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    border-radius: 0;
-    max-height: calc(100vh - 70px);
-  }
-
   .result-item {
     padding: 14px 20px;
   }
@@ -943,6 +947,38 @@
   .result-image {
     width: 70px;
     height: 70px;
+  }
+
+  .mobile-search-close {
+    display: flex;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--light);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--dark);
+    transition: var(--transition);
+    z-index: 1002;
+  }
+
+  .mobile-search-close:hover {
+    background: var(--primary-gradient);
+    color: white;
+  }
+
+  .mobile-search-close svg {
+    font-size: 20px;
+  }
+  .brand img{
+    width: 180px;
+    height: 30px;
   }
 }
 
@@ -960,6 +996,10 @@
     height: 38px;
   }
 
+  .action-btn svg {
+    font-size: 18px;
+  }
+
   .result-info h5 {
     font-size: 14px;
   }
@@ -972,33 +1012,26 @@
     font-size: 11px;
     padding: 4px 10px;
   }
-  .sell-btn{
+
+  .sell-btn {
     display: none;
   }
-}
 
-.logo-container {
-  text-align: center;
-}
+  .brand {
+    font-size: 1.3rem;
+  }
 
-.brand {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
+  .tagline {
+    font-size: 0.45rem;
+    letter-spacing: 1px;
+  }
 
-.car-part {
-  color: var(--primary); /* Blue accent */
-}
+  .search-wrapper.mobile-search-active {
+    padding: 10px 16px;
+  }
 
-.auras-part {
-  color: #1f2937; /* Dark gray/black */
-}
-
-.tagline {
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  color: #4b5563;
-  margin-top: 4px;
-  font-weight: 500;
+  .search-wrapper .search-results {
+    top: 70px;
+    max-height: calc(100vh - 70px);
+  }
 }

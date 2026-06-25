@@ -12,7 +12,7 @@ body {
 
 
 :root {
-  --primary: #1e3a5f;
+  --primary:#1f241f;
   --primary-dark: #0f2a44;
   --primary-light: #2c4c73;
   --gray-dark: #2d3e50;
@@ -28,7 +28,7 @@ body {
 }
 
 ::placeholder{
-  color: #111;
+  color: #1d1a1a;
 }
 
 a {
@@ -174,6 +174,6 @@ button.medium {
 
 
 :where(.css-dev-only-do-not-override-1a3rktk).ant-steps .ant-steps-item-process .ant-steps-item-icon {
-  background-color: #606cbc !important;
-  border-color: #606cbc;
+  background-color: var(--primary) !important;
+  border-color: var(--primary);
 }

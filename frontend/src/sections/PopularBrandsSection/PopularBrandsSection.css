@@ -12,7 +12,7 @@
     left: 0;
     width: 100%;
     height: 10px;
-    background: linear-gradient(to right, #606cbc, #8a94d4);
+    background: linear-gradient(to right, var(--primary), var(--primary));
   }
   
   .brands-header {
@@ -106,7 +106,7 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    background: #606cbc;
+    background: var(--primary);
     color: white;
     font-size: 0.8rem;
     font-weight: 600;
@@ -129,8 +129,8 @@
   
   .explore-btn {
     background: transparent;
-    color: #606cbc;
-    border: 1px solid #606cbc;
+    color: var(--primary);
+    border: 1px solid ;
     border-radius: 6px;
     padding: 8px 20px;
     font-size: 0.9rem;
@@ -141,7 +141,7 @@
   
   .explore-btn:hover {
     background: #606cbc;
-    color: white;
+    color: #111;
     transform: translateY(-2px);
   }
   

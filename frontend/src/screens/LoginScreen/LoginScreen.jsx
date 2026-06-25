@@ -12,10 +12,10 @@ import {
   InputAdornment,
   IconButton,
   Paper,
-  Container,
   CircularProgress,
   useMediaQuery,
   useTheme,
+  Divider,
 } from "@mui/material";
 import {
   Visibility,
@@ -26,69 +26,94 @@ import {
 } from "@mui/icons-material";
 import { useAuthStore } from "../../store/useAuthStore";
 import { styled } from "@mui/material/styles";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-// Styled components
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  borderRadius: theme.spacing(2),
+  borderRadius: 0,
   overflow: "hidden",
-  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+  boxShadow: "none",
+  background: "#ffffff",
+  width: "100%",
+  minHeight: "100vh",
+  display: "flex",
+  alignItems: "center",
   [theme.breakpoints.up("md")]: {
-    maxWidth: 1100,
-    margin: "0 auto",
+    maxWidth: "100%",
+    margin: 0,
   },
 }));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: theme.spacing(1.5),
+    backgroundColor: "#f8f9fa",
     transition: "all 0.3s ease",
+    "& fieldset": {
+      borderColor: "#e8ecf1",
+      borderWidth: "2px",
+    },
     "&:hover fieldset": {
-      borderColor: theme.palette.primary.main,
+      borderColor: "#ff0030",
+      backgroundColor: "#ffffff",
     },
     "&.Mui-focused fieldset": {
+      borderColor: "#ff0030",
       borderWidth: "2px",
-      borderColor: theme.palette.primary.main,
+      boxShadow: "0 0 0 4px rgba(255, 0, 48, 0.08)",
     },
   },
   "& .MuiInputLabel-root": {
     fontSize: "0.9rem",
+    color: "#718096",
+    "&.Mui-focused": {
+      color: "#ff0030",
+    },
+  },
+  "& .MuiOutlinedInput-input": {
+    color: "#1a1a2e",
+  },
+  "& .MuiFormHelperText-root": {
+    color: "#ff0030",
+    marginLeft: 0,
   },
 }));
 
 const SubmitButton = styled(Button)(({ theme }) => ({
-  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  background: "#ff0030",
   borderRadius: theme.spacing(1.5),
-  padding: "12px",
+  padding: "16px",
   fontSize: "1rem",
-  fontWeight: 600,
+  fontWeight: 700,
   textTransform: "none",
-  boxShadow: "0 4px 10px rgba(102, 126, 234, 0.3)",
-  transition: "transform 0.2s ease, box-shadow 0.2s ease",
+  letterSpacing: "0.5px",
+  color: "#ffffff",
+  boxShadow: "0 4px 20px rgba(255, 0, 48, 0.2)",
+  transition: "all 0.3s ease",
   "&:hover": {
     transform: "translateY(-2px)",
-    boxShadow: "0 8px 20px rgba(102, 126, 234, 0.4)",
-    background: "linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%)",
+    boxShadow: "0 8px 30px rgba(255, 0, 48, 0.3)",
+    background: "#e6002a",
   },
   "&:disabled": {
-    background: "#cbd5e0",
+    background: "#e8ecf1",
+    color: "#a0aec0",
     transform: "none",
+    boxShadow: "none",
   },
 }));
 
-const FeatureItem = styled(Box)(({ theme }) => ({
+const FeatureCard = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginBottom: theme.spacing(2),
-  "& .check-icon": {
-    width: 28,
-    height: 28,
-    borderRadius: "50%",
-    backgroundColor: "rgba(255,255,255,0.2)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: theme.spacing(1.5),
-    fontSize: "0.8rem",
+  padding: theme.spacing(1.5),
+  borderRadius: theme.spacing(1.5),
+  backgroundColor: "rgba(255, 0, 48, 0.04)",
+  marginBottom: theme.spacing(1.5),
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: "rgba(255, 0, 48, 0.08)",
+    transform: "translateX(4px)",
   },
 }));
 
@@ -127,10 +152,8 @@ function LoginScreen() {
           icon: "success",
           timer: 1500,
           showConfirmButton: false,
-          background: "#fff",
-          customClass: {
-            popup: "rounded-2xl",
-          },
+          background: "#ffffff",
+          color: "#1a1a2e",
         }).then(() => {
           navigate("/");
         });
@@ -139,8 +162,10 @@ function LoginScreen() {
           title: "Access Denied",
           text: "Invalid Credentials",
           icon: "error",
-          confirmButtonColor: "#667eea",
+          confirmButtonColor: "#ff0030",
           confirmButtonText: "Try Again",
+          background: "#ffffff",
+          color: "#1a1a2e",
         });
       }
     } catch (error) {
@@ -150,7 +175,9 @@ function LoginScreen() {
           error.response?.data?.message ||
           "Something went wrong. Please try again.",
         icon: "error",
-        confirmButtonColor: "#667eea",
+        confirmButtonColor: "#ff0030",
+        background: "#ffffff",
+        color: "#1a1a2e",
       });
     } finally {
       setLoading(false);
@@ -165,301 +192,365 @@ function LoginScreen() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        py: 4,
-        px: 2,
+        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
       }}
     >
-      <Container maxWidth="lg">
-        <StyledPaper elevation={0}>
-          <Grid container>
-            {/* Left side - Welcome section */}
-            <Grid
-              item
-              xs={12}
-              md={6}
+      <StyledPaper elevation={0}>
+        <Grid container sx={{ minHeight: "100vh" }}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+              background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
+              color: "white",
+              p: 5,
+              position: "relative",
+              overflow: "hidden",
+              minHeight: "100vh",
+            }}
+          >
+            <Box
               sx={{
-                display: { xs: "none", md: "block" },
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                color: "white",
-                p: 5,
                 position: "relative",
-                overflow: "hidden",
+                zIndex: 2,
+                width: "100%",
               }}
             >
-              <Box
-                sx={{
-                  position: "relative",
-                  zIndex: 2,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography variant="h3" sx={{ fontWeight: 700, mb: 2 }}>
-                  Welcome Back to{" "}
-                  <Box component="span" sx={{ fontWeight: 800 }}>
-                    CarAuras
-                  </Box>
-                </Typography>
-                <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-                  Drive your dream today with India's most trusted car
-                  marketplace
-                </Typography>
-
-                <Box sx={{ mt: 4 }}>
-                  <FeatureItem>
-                    <Box className="check-icon">✓</Box>
-                    <Typography variant="body2">
-                      Access to 10,000+ verified cars
-                    </Typography>
-                  </FeatureItem>
-                  <FeatureItem>
-                    <Box className="check-icon">✓</Box>
-                    <Typography variant="body2">
-                      Best prices guaranteed
-                    </Typography>
-                  </FeatureItem>
-                  <FeatureItem>
-                    <Box className="check-icon">✓</Box>
-                    <Typography variant="body2">
-                      24/7 customer support
-                    </Typography>
-                  </FeatureItem>
-                  <FeatureItem>
-                    <Box className="check-icon">✓</Box>
-                    <Typography variant="body2">
-                      Free car inspection reports
-                    </Typography>
-                  </FeatureItem>
-                </Box>
-
-                <Box sx={{ mt: 5, pt: 3 }}>
-                  <Typography variant="caption" sx={{ opacity: 0.7 }}>
-                    Join 50,000+ happy customers
-                  </Typography>
-                  <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Typography key={star} variant="h6">
-                        ★
-                      </Typography>
-                    ))}
-                  </Box>
-                </Box>
-              </Box>
-
-              {/* Decorative elements */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: -50,
-                  right: -50,
-                  width: 200,
-                  height: 200,
-                  borderRadius: "50%",
-                  bgcolor: "rgba(255,255,255,0.1)",
-                  zIndex: 1,
-                }}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: -30,
-                  left: -30,
-                  width: 150,
-                  height: 150,
-                  borderRadius: "50%",
-                  bgcolor: "rgba(255,255,255,0.1)",
-                  zIndex: 1,
-                }}
-              />
-            </Grid>
-
-            {/* Right side - Login Form */}
-            <Grid item xs={12} md={6}>
-              <Box sx={{ p: { xs: 3, sm: 4, md: 5 } }}>
-                {/* Back button for mobile */}
-                {isMobile && (
-                  <IconButton
-                    onClick={() => navigate("/")}
-                    sx={{ mb: 2, color: "#667eea" }}
-                  >
-                    <ArrowBack />
-                  </IconButton>
-                )}
-
+              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                <DirectionsCarIcon
+                  sx={{ fontSize: 40, color: "#ff0030", mr: 1.5 }}
+                />
                 <Typography
-                  variant="h4"
+                  variant="h3"
                   sx={{
-                    fontWeight: 700,
-                    mb: 1,
-                    background:
-                      "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
+                    fontWeight: 900,
+                    letterSpacing: "-1px",
                   }}
                 >
-                  Sign In
+                  <Box component="span" sx={{ color: "#ffffff" }}>
+                    Car
+                  </Box>
+                  <Box component="span" sx={{ color: "#ff0030" }}>
+                    Auras
+                  </Box>
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mb: 4 }}
-                >
-                  Welcome back! Please enter your credentials
+              </Box>
+
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 700,
+                  mb: 2,
+                  lineHeight: 1.3,
+                }}
+              >
+                Welcome Back!
+              </Typography>
+
+              <Typography
+                variant="body1"
+                sx={{
+                  mb: 4,
+                  opacity: 0.7,
+                  fontSize: "1rem",
+                  fontWeight: 300,
+                  lineHeight: 1.6,
+                }}
+              >
+                Drive your dream today with India's most trusted car marketplace
+              </Typography>
+
+              <Box sx={{ mt: 2 }}>
+                <FeatureCard sx={{ backgroundColor: "rgba(255, 0, 48, 0.1)" }}>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    Access to 10,000+ verified cars
+                  </Typography>
+                </FeatureCard>
+                <FeatureCard>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    Best prices guaranteed
+                  </Typography>
+                </FeatureCard>
+                <FeatureCard>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    24/7 customer support
+                  </Typography>
+                </FeatureCard>
+                <FeatureCard>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    Free car inspection reports
+                  </Typography>
+                </FeatureCard>
+              </Box>
+
+              <Box
+                sx={{
+                  mt: 4,
+                  pt: 3,
+                  borderTop: "1px solid rgba(255,255,255,0.05)",
+                }}
+              >
+                <Typography variant="caption" sx={{ opacity: 0.5 }}>
+                  Join 50,000+ happy customers
                 </Typography>
+                <Box sx={{ display: "flex", gap: 0.5, mt: 1 }}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Typography
+                      key={star}
+                      sx={{ color: "#ff0030", fontSize: "1.2rem" }}
+                    >
+                      ★
+                    </Typography>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
 
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={handleSubmit}
+            <Box
+              sx={{
+                position: "absolute",
+                top: -100,
+                right: -100,
+                width: 300,
+                height: 300,
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle, rgba(255,0,48,0.05) 0%, transparent 70%)",
+                zIndex: 1,
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: -50,
+                left: -50,
+                width: 200,
+                height: 200,
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle, rgba(255,0,48,0.03) 0%, transparent 70%)",
+                zIndex: 1,
+              }}
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: { xs: "auto", md: "100vh" },
+              py: { xs: 4, md: 0 },
+            }}
+          >
+            <Box
+              sx={{
+                p: { xs: 3, sm: 4, md: 5 },
+                maxWidth: "480px",
+                width: "100%",
+                mx: "auto",
+              }}
+            >
+              {isMobile && (
+                <IconButton
+                  onClick={() => navigate("/")}
+                  sx={{ mb: 2, color: "#1a1a2e" }}
                 >
-                  {({
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    values,
-                    isValid,
-                  }) => (
-                    <Form style={{ width: "100%" }} noValidate>
-                      <StyledTextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="emailOrPhone"
-                        label="Email or Phone Number"
-                        name="emailOrPhone"
-                        autoComplete="email"
-                        autoFocus
-                        value={values.emailOrPhone}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          touched.emailOrPhone && Boolean(errors.emailOrPhone)
-                        }
-                        helperText={touched.emailOrPhone && errors.emailOrPhone}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <Email sx={{ color: "#667eea" }} />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
+                  <ArrowBack />
+                </IconButton>
+              )}
 
-                      <StyledTextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type={showPassword ? "text" : "password"}
-                        id="password"
-                        autoComplete="current-password"
-                        value={values.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.password && Boolean(errors.password)}
-                        helperText={touched.password && errors.password}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <Lock sx={{ color: "#667eea" }} />
-                            </InputAdornment>
-                          ),
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={() => setShowPassword(!showPassword)}
-                                edge="end"
-                              >
-                                {showPassword ? (
-                                  <VisibilityOff />
-                                ) : (
-                                  <Visibility />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 800,
+                  mb: 1,
+                  color: "#1a1a2e",
+                  letterSpacing: "-0.5px",
+                }}
+              >
+                Sign In
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ mb: 4, color: "#718096", fontSize: "0.95rem" }}
+              >
+                Welcome back! Please enter your credentials
+              </Typography>
 
-                      <SubmitButton
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        disabled={
-                          loading || !values.emailOrPhone || !values.password
-                        }
-                        sx={{ mt: 3, mb: 2 }}
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ errors, touched, handleChange, handleBlur, values }) => (
+                  <Form style={{ width: "100%" }} noValidate>
+                    <StyledTextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="emailOrPhone"
+                      label="Email or Phone Number"
+                      name="emailOrPhone"
+                      autoComplete="email"
+                      autoFocus
+                      value={values.emailOrPhone}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.emailOrPhone && Boolean(errors.emailOrPhone)
+                      }
+                      helperText={touched.emailOrPhone && errors.emailOrPhone}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Email sx={{ color: "#a0aec0" }} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+
+                    <StyledTextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      autoComplete="current-password"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.password && Boolean(errors.password)}
+                      helperText={touched.password && errors.password}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Lock sx={{ color: "#a0aec0" }} />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                              sx={{ color: "#a0aec0" }}
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        mt: 1,
+                      }}
+                    >
+                      <Link
+                        to="/forgot-password"
+                        style={{
+                          textDecoration: "none",
+                          color: "#ff0030",
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                        }}
                       >
-                        {loading ? (
-                          <CircularProgress size={24} color="inherit" />
-                        ) : (
-                          "Sign In"
-                        )}
-                      </SubmitButton>
+                        Forgot password?
+                      </Link>
+                    </Box>
 
-                      <Box sx={{ mt: 2, textAlign: "center" }}>
+                    <SubmitButton
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      disabled={
+                        loading || !values.emailOrPhone || !values.password
+                      }
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      {loading ? (
+                        <CircularProgress size={24} sx={{ color: "#ffffff" }} />
+                      ) : (
+                        "Sign In"
+                      )}
+                    </SubmitButton>
+
+                    <Divider
+                      sx={{
+                        my: 3,
+                        borderColor: "#e8ecf1",
+                      }}
+                    />
+
+                    <Box sx={{ textAlign: "center" }}>
+                      <Typography variant="body2" sx={{ color: "#718096" }}>
+                        Don't have an account?{" "}
                         <Link
-                          to="/forgot-password"
+                          to="/signup"
                           style={{
                             textDecoration: "none",
-                            color: "#667eea",
-                            fontSize: "0.875rem",
-                            fontWeight: 500,
+                            color: "#ff0030",
+                            fontWeight: 700,
                           }}
                         >
-                          Forgot password?
+                          Sign Up
+                        </Link>
+                      </Typography>
+                    </Box>
+
+                    {!isMobile && (
+                      <Box sx={{ mt: 4, textAlign: "center" }}>
+                        <Link
+                          to="/"
+                          style={{
+                            textDecoration: "none",
+                            color: "#a0aec0",
+                            fontSize: "0.875rem",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "4px",
+                          }}
+                        >
+                          <ArrowBack sx={{ fontSize: "1rem" }} />
+                          Back to Home
                         </Link>
                       </Box>
-
-                      <Box sx={{ mt: 3, textAlign: "center" }}>
-                        <Typography variant="body2" color="text.secondary">
-                          Don't have an account?{" "}
-                          <Link
-                            to="/signup"
-                            style={{
-                              textDecoration: "none",
-                              color: "#667eea",
-                              fontWeight: 600,
-                            }}
-                          >
-                            Sign Up
-                          </Link>
-                        </Typography>
-                      </Box>
-
-                      {!isMobile && (
-                        <Box sx={{ mt: 4, textAlign: "center" }}>
-                          <Link
-                            to="/"
-                            style={{
-                              textDecoration: "none",
-                              color: "#9ca3af",
-                              fontSize: "0.875rem",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "4px",
-                            }}
-                          >
-                            <ArrowBack sx={{ fontSize: "1rem" }} />
-                            Back to Home
-                          </Link>
-                        </Box>
-                      )}
-                    </Form>
-                  )}
-                </Formik>
-              </Box>
-            </Grid>
+                    )}
+                  </Form>
+                )}
+              </Formik>
+            </Box>
           </Grid>
-        </StyledPaper>
-      </Container>
+        </Grid>
+      </StyledPaper>
     </Box>
   );
 }

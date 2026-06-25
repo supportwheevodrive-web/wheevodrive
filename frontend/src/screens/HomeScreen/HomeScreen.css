@@ -1,147 +1,119 @@
-.screens {
-    padding: 0px;
-  }
-  
+.category-slider-wrapper {
+  position: relative;
+  padding: 10px 0 20px;
+}
 
-  .slider-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 300px; 
-  }
-  
-  .card-slider {
-    min-height: 300px;
-    overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    white-space: nowrap;
-    padding: 10px 0;
-    flex: 1;
+.category-slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.category-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.category-slider-item {
+  flex: 0 0 280px;
+  min-width: 280px;
+  transition: transform 0.3s ease;
+}
+
+.category-slider-item:hover {
+  transform: translateY(-4px);
+}
+
+.category-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+  color: var(--dark);
+}
+
+.category-slider-btn:hover {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 20px rgba(23, 133, 130, 0.25);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.category-slider-btn.left {
+  left: -20px;
+}
+
+.category-slider-btn.right {
+  right: -20px;
+}
+
+.category-slider-btn svg {
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .category-slider-item {
+    flex: 0 0 220px;
+    min-width: 220px;
   }
 
-  
-  
-  .card-slider::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, and Opera */
-  }
-  
-  .card-container {
-    display: inline-flex;
-    gap: 20px;
-  }
-  
-  .card-container > * {
-    flex: 0 0 auto;
-    width: 250px;
-  }
-  
-  .arrow-button {
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    color: #fff;
-  }
-  
-  .arrow-button.left {
-    position: absolute;
-    left: -20px;
-  }
-  
-  .arrow-button.right {
-    position: absolute;
-    right: -20px;
-  }
-  
-  @media (max-width: 768px) {
-    .card-container > * {
-      width: 200px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .card-container > * {
-      width: 150px;
-    }
+  .category-slider-btn {
+    width: 32px;
+    height: 32px;
   }
 
-  .cards-container {
-    width: 100%;
-    padding: 0 15px;
-    margin: 20px 0;
+  .category-slider-btn svg {
+    font-size: 18px;
   }
-  
 
-  /* .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+  .category-slider-btn.left {
+    left: -10px;
+  }
+
+  .category-slider-btn.right {
+    right: -10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-slider-item {
+    flex: 0 0 180px;
+    min-width: 180px;
+  }
+
+  .category-slider-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .category-slider-btn svg {
+    font-size: 14px;
+  }
+
+  .category-slider-btn.left {
+    left: -6px;
+  }
+
+  .category-slider-btn.right {
+    right: -6px;
+  }
+
+  .category-slider {
     gap: 12px;
-    width: 100%;
+    padding: 8px 2px;
   }
-  
-
-  @media (min-width: 768px) {
-    .cards-grid {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-      gap: 20px;
-    }
-  } */
-
-  .tab-scroll-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .tab-scroll-wrapper {
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    flex: 1;
-  }
-  
-  .tab-scroll-wrapper::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .tab-list {
-    display: flex;
-    white-space: nowrap;
-  }
-  
-  .scroll-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    z-index: 1;
-  }
-  
-  .scroll-button svg {
-    font-size: 24px;
-    color: #666;
-  }
-  
-  .scroll-button:hover svg {
-    color: #333;
-  }
-
-  .latst-cars-section .card, .tabs-container .card {
-    display: flex;
-    justify-content: space-between;
-}
-
-.latst-cars-section section.Toastify, .tabs-container section.Toastify {
-    display: none;
-}
-
-
-@media (max-width: 400px) {
-    .cards-grid {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-        gap: 8px;
-    }
 }

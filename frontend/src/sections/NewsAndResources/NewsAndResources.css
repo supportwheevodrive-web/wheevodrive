@@ -154,7 +154,7 @@
 }
 
 .news-link:hover {
-  color: #0e6e69;
+  color: var(--primary);
 }
 
 .arrow-icon {

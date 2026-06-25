@@ -28,7 +28,7 @@ function BasicInformation() {
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
       <Title
         level={3}
-        style={{ textAlign: "left", marginBottom: 32, color: "#606cbc" }}
+        style={{ textAlign: "left", marginBottom: 32, color: "#111" }}
       >
         Basic Information
       </Title>
@@ -272,7 +272,7 @@ function BasicInformation() {
                 size="large"
                 style={{
                   borderRadius: 8,
-                  background: "rgb(96, 108, 188)",
+                  background: "#ff0030",
                   border: "none",
                   padding: "10px 32px",
                   color: "#fff",

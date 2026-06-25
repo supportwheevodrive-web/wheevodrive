@@ -22,7 +22,7 @@ import {
   Verified,
   FlashOn,
 } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { SEARCH_URL } from "../../config/api";
 import { UserContext } from "../../hooks/UserContext";
@@ -37,6 +37,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchKey, setSearchKey] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
@@ -285,10 +286,11 @@ function Header() {
                     window.location.href = "/";
                   }}
                 >
-                  <span className="car-part">Car</span>
-                  <span className="auras-part">Auras</span>
+                  {/* <span className="car-part">Car</span>
+                  <span className="auras-part">Auras</span> */}
+                  <img src="/images/new_logo.png" />
                 </div>
-                <div className="tagline">TRUSTED USED CARS SELL & BUY</div>
+                {/* <div className="tagline">TRUSTED USED CARS SELL & BUY</div> */}
               </div>
 
               <div
@@ -447,7 +449,13 @@ function Header() {
               <ul className="nav-list">
                 {navItems.map((item, index) => (
                   <li key={index}>
-                    <a href={item.path} onClick={handleResultClick}>
+                    <a
+                      href={item.path}
+                      onClick={handleResultClick}
+                      className={
+                        location.pathname === item.path ? "active" : ""
+                      }
+                    >
                       {item.label}
                     </a>
                   </li>
@@ -462,10 +470,17 @@ function Header() {
         <div className="mobile-nav-header">
           <div className="logo">
             <DirectionsCar />
-            <span>
-              Car<span>Auras</span>
-            </span>
           </div>
+          <h2
+            style={{
+              color: "red",
+              fontSize: "20px",
+              top: "5px",
+              position: "relative",
+            }}
+          >
+            WheevoDrive
+          </h2>
           <button className="close-btn" onClick={toggleMenu}>
             <Close />
           </button>
@@ -487,10 +502,15 @@ function Header() {
         <ul className="mobile-nav-list">
           {navItems.map((item, index) => {
             const Icon = item.icon;
+            const isActive = location.pathname === item.path;
             return (
               <li key={index}>
-                <a href={item.path} onClick={handleResultClick}>
-                  <Icon />
+                <a
+                  href={item.path}
+                  onClick={handleResultClick}
+                  className={isActive ? "active" : ""}
+                >
+                  <Icon className={isActive ? "active-icon" : ""} />
                   <span>{item.label}</span>
                   <ChevronRight />
                 </a>

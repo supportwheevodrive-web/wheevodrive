@@ -28,7 +28,7 @@ function Specifications() {
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
       <Title
         level={3}
-        style={{ textAlign: "left", marginBottom: 32, color: "#606cbc" }}
+        style={{ textAlign: "left", marginBottom: 32, color: "#111" }}
       >
         Enter Car Specifications
       </Title>
@@ -264,7 +264,7 @@ function Specifications() {
                 onClick={handleSubmit}
                 style={{
                   borderRadius: 8,
-                  background: "rgb(96, 108, 188)",
+                  background: "#ff0030",
                   color: "#fff",
                   padding: "10px 32px",
                 }}

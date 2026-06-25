@@ -11,7 +11,6 @@ import {
   InputAdornment,
   CircularProgress,
   Paper,
-  Container,
   Grid,
   Typography,
   Box,
@@ -33,66 +32,94 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LockIcon from "@mui/icons-material/Lock";
 import BadgeIcon from "@mui/icons-material/Badge";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-// Styled components
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  borderRadius: theme.spacing(2),
+  borderRadius: 0,
   overflow: "hidden",
-  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+  boxShadow: "none",
+  background: "#ffffff",
+  width: "100%",
+  minHeight: "100vh",
   [theme.breakpoints.up("md")]: {
-    maxWidth: 1100,
-    margin: "0 auto",
+    maxWidth: "100%",
+    margin: 0,
   },
 }));
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
   width: "100%",
-  padding: "12px 16px",
+  padding: "14px 16px",
   fontSize: "0.95rem",
-  borderRadius: theme.spacing(1),
-  border: "1px solid #e0e0e0",
+  borderRadius: theme.spacing(1.5),
+  border: "2px solid #e8ecf1",
   transition: "all 0.3s ease",
-  backgroundColor: "#fff",
+  backgroundColor: "#f8f9fa",
+  color: "#1a1a2e",
+  "&::placeholder": {
+    color: "#a0aec0",
+  },
   "&:hover": {
-    borderColor: theme.palette.primary.main,
+    borderColor: "#ff0030",
+    backgroundColor: "#ffffff",
   },
   "&.Mui-focused": {
-    borderColor: theme.palette.primary.main,
-    boxShadow: `0 0 0 2px ${theme.palette.primary.main}20`,
+    borderColor: "#ff0030",
+    backgroundColor: "#ffffff",
+    boxShadow: "0 0 0 4px rgba(255, 0, 48, 0.08)",
   },
 }));
 
 const SubmitButton = styled("button")(({ theme }) => ({
   width: "100%",
-  padding: "12px",
-  fontSize: "0.95rem",
-  fontWeight: 600,
-  color: "#fff",
-  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  padding: "16px",
+  fontSize: "1rem",
+  fontWeight: 700,
+  color: "#ffffff",
+  background: "#ff0030",
   border: "none",
-  borderRadius: theme.spacing(1),
+  borderRadius: theme.spacing(1.5),
   cursor: "pointer",
-  transition: "transform 0.2s ease, box-shadow 0.2s ease",
+  transition: "all 0.3s ease",
+  letterSpacing: "0.5px",
   "&:hover": {
     transform: "translateY(-2px)",
-    boxShadow: "0 10px 20px rgba(102, 126, 234, 0.3)",
+    boxShadow: "0 10px 30px rgba(255, 0, 48, 0.25)",
+    background: "#e6002a",
   },
   "&:disabled": {
     opacity: 0.6,
     cursor: "not-allowed",
     transform: "none",
+    boxShadow: "none",
   },
 }));
 
 const FieldContainer = styled(Box)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(2.5),
 }));
 
 const ErrorText = styled("div")(({ theme }) => ({
-  color: theme.palette.error.main,
-  fontSize: "0.7rem",
+  color: "#ff0030",
+  fontSize: "0.75rem",
   marginTop: theme.spacing(0.5),
-  marginLeft: theme.spacing(1.5),
+  marginLeft: theme.spacing(1),
+  fontWeight: 500,
+}));
+
+const FeatureCard = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(1.5),
+  borderRadius: theme.spacing(1.5),
+  backgroundColor: "rgba(255, 0, 48, 0.04)",
+  marginBottom: theme.spacing(1.5),
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: "rgba(255, 0, 48, 0.08)",
+    transform: "translateX(4px)",
+  },
 }));
 
 function SignUpScreen() {
@@ -157,8 +184,10 @@ function SignUpScreen() {
           title: "Success!",
           text: "Successfully created account",
           icon: "success",
-          confirmButtonColor: "#667eea",
+          confirmButtonColor: "#ff0030",
           timer: 2000,
+          background: "#ffffff",
+          color: "#1a1a2e",
         }).then(() => {
           navigate("/signin");
         });
@@ -167,7 +196,9 @@ function SignUpScreen() {
           title: "Error",
           text: "Something went wrong, please try again",
           icon: "error",
-          confirmButtonColor: "#667eea",
+          confirmButtonColor: "#ff0030",
+          background: "#ffffff",
+          color: "#1a1a2e",
         });
       }
     } catch (error) {
@@ -175,7 +206,9 @@ function SignUpScreen() {
         title: "Error",
         text: error.response?.data?.message || "Unable to process request",
         icon: "error",
-        confirmButtonColor: "#667eea",
+        confirmButtonColor: "#ff0030",
+        background: "#ffffff",
+        color: "#1a1a2e",
       });
     } finally {
       setLoading(false);
@@ -193,16 +226,19 @@ function SignUpScreen() {
   ) => (
     <Grid item xs={xs} sm={sm}>
       <FieldContainer>
-        <Box sx={{ display: "flex", alignItems: "center", mb: 0.5 }}>
-          {icon}
+        <Box sx={{ display: "flex", alignItems: "center", mb: 0.75 }}>
+          {React.cloneElement(icon, {
+            sx: { color: "#ff0030", fontSize: "1.1rem" },
+          })}
           <Typography
             component="label"
             htmlFor={name}
             sx={{
               ml: 1,
               fontSize: "0.8rem",
-              fontWeight: 500,
-              color: "#374151",
+              fontWeight: 600,
+              color: "#2d3748",
+              letterSpacing: "0.3px",
             }}
           >
             {label}
@@ -219,7 +255,12 @@ function SignUpScreen() {
                 <IconButton
                   onClick={togglePasswordVisibility}
                   edge="end"
-                  sx={{ mr: 1, padding: 0 }}
+                  sx={{
+                    mr: 1,
+                    padding: 0,
+                    color: "#a0aec0",
+                    "&:hover": { color: "#ff0030" },
+                  }}
                   size="small"
                 >
                   {showPassword ? (
@@ -244,448 +285,518 @@ function SignUpScreen() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        py: 3,
-        px: 2,
+        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
       }}
     >
-      <Container maxWidth="lg">
-        <StyledPaper elevation={0}>
-          <Grid container>
-            {/* Left side - Image and info */}
-            <Grid
-              item
-              xs={12}
-              md={5}
+      <StyledPaper elevation={0}>
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            md={5}
+            sx={{
+              display: { xs: "none", md: "block" },
+              background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
+              color: "white",
+              p: 5,
+              position: "relative",
+              overflow: "hidden",
+              minHeight: "100vh",
+            }}
+          >
+            <Box
               sx={{
-                display: { xs: "none", md: "block" },
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                color: "white",
-                p: 4,
                 position: "relative",
-                overflow: "hidden",
+                zIndex: 2,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
               }}
             >
-              <Box
-                sx={{
-                  position: "relative",
-                  zIndex: 2,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
-                  Welcome to{" "}
-                  <Box component="span" sx={{ fontWeight: 800 }}>
-                    CarAuras
-                  </Box>
-                </Typography>
-                <Typography variant="body1" sx={{ mb: 3, opacity: 0.9 }}>
-                  The easiest and most convenient platform for buying and
-                  selling cars
-                </Typography>
-                <Box sx={{ mt: 2 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1.5 }}>
-                    <Box
-                      sx={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: "50%",
-                        bgcolor: "rgba(255,255,255,0.2)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mr: 1.5,
-                        fontSize: "0.8rem",
-                      }}
-                    >
-                      ✓
-                    </Box>
-                    <Typography variant="body2">
-                      Hassle-free car buying experience
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1.5 }}>
-                    <Box
-                      sx={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: "50%",
-                        bgcolor: "rgba(255,255,255,0.2)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mr: 1.5,
-                        fontSize: "0.8rem",
-                      }}
-                    >
-                      ✓
-                    </Box>
-                    <Typography variant="body2">
-                      Verified sellers and listings
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1.5 }}>
-                    <Box
-                      sx={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: "50%",
-                        bgcolor: "rgba(255,255,255,0.2)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        mr: 1.5,
-                        fontSize: "0.8rem",
-                      }}
-                    >
-                      ✓
-                    </Box>
-                    <Typography variant="body2">
-                      Secure and safe transactions
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: -50,
-                  right: -50,
-                  width: 150,
-                  height: 150,
-                  borderRadius: "50%",
-                  bgcolor: "rgba(255,255,255,0.1)",
-                  zIndex: 1,
-                }}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: -30,
-                  left: -30,
-                  width: 120,
-                  height: 120,
-                  borderRadius: "50%",
-                  bgcolor: "rgba(255,255,255,0.1)",
-                  zIndex: 1,
-                }}
-              />
-            </Grid>
-
-            {/* Right side - Form */}
-            <Grid item xs={12} md={7}>
-              <Box sx={{ p: { xs: 3, sm: 4 } }}>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                <DirectionsCarIcon
+                  sx={{ fontSize: 40, color: "#ff0030", mr: 1.5 }}
+                />
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   sx={{
-                    fontWeight: 700,
-                    mb: 0.5,
-                    background:
-                      "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
+                    fontWeight: 900,
+                    letterSpacing: "-1px",
                   }}
                 >
-                  Create Account
+                  <Box component="span" sx={{ color: "#ffffff" }}>
+                    Car
+                  </Box>
+                  <Box component="span" sx={{ color: "#ff0030" }}>
+                    Auras
+                  </Box>
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mb: 3 }}
-                >
-                  Join our community of car enthusiasts today
+              </Box>
+
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 700,
+                  mb: 2,
+                  lineHeight: 1.3,
+                }}
+              >
+                Start Your Journey With Us
+              </Typography>
+
+              <Typography
+                variant="body1"
+                sx={{
+                  mb: 4,
+                  opacity: 0.7,
+                  fontSize: "1rem",
+                  fontWeight: 300,
+                  lineHeight: 1.6,
+                }}
+              >
+                Join thousands of happy customers who found their dream car
+                through our platform
+              </Typography>
+
+              <Box sx={{ mt: 2 }}>
+                <FeatureCard sx={{ backgroundColor: "rgba(255, 0, 48, 0.1)" }}>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    Hassle-free car buying experience
+                  </Typography>
+                </FeatureCard>
+                <FeatureCard>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    Verified sellers and listings
+                  </Typography>
+                </FeatureCard>
+                <FeatureCard>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    Secure and safe transactions
+                  </Typography>
+                </FeatureCard>
+                <FeatureCard>
+                  <CheckCircleIcon
+                    sx={{ color: "#ff0030", mr: 1.5, fontSize: 20 }}
+                  />
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    24/7 customer support
+                  </Typography>
+                </FeatureCard>
+              </Box>
+
+              <Box
+                sx={{
+                  mt: 4,
+                  pt: 3,
+                  borderTop: "1px solid rgba(255,255,255,0.05)",
+                }}
+              >
+                <Typography variant="caption" sx={{ opacity: 0.5 }}>
+                  Trusted by 50,000+ customers
                 </Typography>
+                <Box sx={{ display: "flex", gap: 0.5, mt: 1 }}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Typography
+                      key={star}
+                      sx={{ color: "#ff0030", fontSize: "1.2rem" }}
+                    >
+                      ★
+                    </Typography>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
 
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={handleSubmit}
-                >
-                  {({ values, setFieldValue, isValid }) => (
-                    <Form>
-                      <Grid container spacing={2}>
-                        {/* 2-column layout for form fields */}
-                        {renderField(
-                          "first_name",
-                          "First Name",
-                          "Enter first name",
-                          <PersonIcon fontSize="small" color="primary" />,
-                          "text",
-                          12,
-                          6
-                        )}
-                        {renderField(
-                          "last_name",
-                          "Last Name",
-                          "Enter last name",
-                          <BadgeIcon fontSize="small" color="primary" />,
-                          "text",
-                          12,
-                          6
-                        )}
-                        {renderField(
-                          "email",
-                          "Email Address",
-                          "Enter email",
-                          <EmailIcon fontSize="small" color="primary" />,
-                          "text",
-                          12,
-                          12
-                        )}
-                        {renderField(
-                          "username",
-                          "Username",
-                          "Choose username",
-                          <PersonIcon fontSize="small" color="primary" />,
-                          "text",
-                          12,
-                          6
-                        )}
-                        {renderField(
-                          "phone",
-                          "Phone Number",
-                          "10-digit number",
-                          <PhoneIcon fontSize="small" color="primary" />,
-                          "text",
-                          12,
-                          6
-                        )}
+            <Box
+              sx={{
+                position: "absolute",
+                top: -100,
+                right: -100,
+                width: 300,
+                height: 300,
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle, rgba(255,0,48,0.05) 0%, transparent 70%)",
+                zIndex: 1,
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: -50,
+                left: -50,
+                width: 200,
+                height: 200,
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle, rgba(255,0,48,0.03) 0%, transparent 70%)",
+                zIndex: 1,
+              }}
+            />
+          </Grid>
 
-                        {/* Location field - full width */}
+          <Grid item xs={12} md={7}>
+            <Box
+              sx={{ p: { xs: 3, sm: 4, md: 5 }, maxWidth: "600px", mx: "auto" }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 800,
+                  mb: 0.5,
+                  color: "#1a1a2e",
+                  letterSpacing: "-0.5px",
+                }}
+              >
+                Create Account
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  mb: 4,
+                  color: "#718096",
+                  fontSize: "0.95rem",
+                }}
+              >
+                Fill in your details to get started
+              </Typography>
+
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ values, setFieldValue, isValid }) => (
+                  <Form>
+                    <Grid container spacing={2}>
+                      {renderField(
+                        "first_name",
+                        "First Name",
+                        "Enter first name",
+                        <PersonIcon />,
+                        "text",
+                        12,
+                        6
+                      )}
+                      {renderField(
+                        "last_name",
+                        "Last Name",
+                        "Enter last name",
+                        <BadgeIcon />,
+                        "text",
+                        12,
+                        6
+                      )}
+                      {renderField(
+                        "email",
+                        "Email Address",
+                        "Enter email",
+                        <EmailIcon />,
+                        "text",
+                        12,
+                        12
+                      )}
+                      {renderField(
+                        "username",
+                        "Username",
+                        "Choose username",
+                        <PersonIcon />,
+                        "text",
+                        12,
+                        6
+                      )}
+                      {renderField(
+                        "phone",
+                        "Phone Number",
+                        "10-digit number",
+                        <PhoneIcon />,
+                        "text",
+                        12,
+                        6
+                      )}
+
+                      <Grid item xs={12}>
+                        <FieldContainer>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              mb: 0.75,
+                            }}
+                          >
+                            <LocationOnIcon
+                              sx={{
+                                color: "#ff0030",
+                                fontSize: "1.1rem",
+                              }}
+                            />
+                            <Typography
+                              component="label"
+                              sx={{
+                                ml: 1,
+                                fontSize: "0.8rem",
+                                fontWeight: 600,
+                                color: "#2d3748",
+                                letterSpacing: "0.3px",
+                              }}
+                            >
+                              Location
+                            </Typography>
+                          </Box>
+                          <ComboBox
+                            options={districtsInKerala}
+                            value={values.location || ""}
+                            onChange={(e, newValue) =>
+                              setFieldValue("location", newValue)
+                            }
+                            placeholder="Select your district"
+                            sx={{
+                              width: "100%",
+                              "& .MuiInputBase-root": {
+                                padding: "10px 14px",
+                                fontSize: "0.95rem",
+                                backgroundColor: "#f8f9fa",
+                                borderRadius: "12px",
+                                border: "2px solid #e8ecf1",
+                                transition: "all 0.3s ease",
+                                "&:hover": {
+                                  borderColor: "#ff0030",
+                                  backgroundColor: "#ffffff",
+                                },
+                                "&.Mui-focused": {
+                                  borderColor: "#ff0030",
+                                  backgroundColor: "#ffffff",
+                                  boxShadow: "0 0 0 4px rgba(255, 0, 48, 0.08)",
+                                },
+                              },
+                              "& .MuiInputBase-input": {
+                                color: "#1a1a2e",
+                              },
+                              "& .MuiSvgIcon-root": {
+                                color: "#a0aec0",
+                              },
+                            }}
+                          />
+                          <ErrorMessage name="location" component={ErrorText} />
+                        </FieldContainer>
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <FieldContainer>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              mb: 0.75,
+                            }}
+                          >
+                            <LockIcon
+                              sx={{
+                                color: "#ff0030",
+                                fontSize: "1.1rem",
+                              }}
+                            />
+                            <Typography
+                              component="label"
+                              sx={{
+                                ml: 1,
+                                fontSize: "0.8rem",
+                                fontWeight: 600,
+                                color: "#2d3748",
+                                letterSpacing: "0.3px",
+                              }}
+                            >
+                              Password
+                            </Typography>
+                          </Box>
+                          <Field
+                            as={StyledInput}
+                            name="password"
+                            placeholder="Create a strong password"
+                            type={showPassword ? "text" : "password"}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                <IconButton
+                                  onClick={togglePasswordVisibility}
+                                  edge="end"
+                                  sx={{
+                                    mr: 1,
+                                    padding: 0,
+                                    color: "#a0aec0",
+                                    "&:hover": { color: "#ff0030" },
+                                  }}
+                                  size="small"
+                                >
+                                  {showPassword ? (
+                                    <VisibilityOff fontSize="small" />
+                                  ) : (
+                                    <Visibility fontSize="small" />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                          />
+                          <ErrorMessage name="password" component={ErrorText} />
+                        </FieldContainer>
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={hasPhysicalStore}
+                              onChange={() => {
+                                setHasPhysicalStore(!hasPhysicalStore);
+                                setFieldValue(
+                                  "has_physical_store",
+                                  !hasPhysicalStore
+                                );
+                              }}
+                              size="small"
+                              sx={{
+                                "& .MuiSwitch-switchBase.Mui-checked": {
+                                  color: "#ff0030",
+                                },
+                                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                                  {
+                                    backgroundColor: "#ff0030",
+                                  },
+                              }}
+                            />
+                          }
+                          label={
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "#4a5568",
+                                fontWeight: 500,
+                              }}
+                            >
+                              I have a physical store
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+
+                      {hasPhysicalStore && (
                         <Grid item xs={12}>
                           <FieldContainer>
                             <Box
                               sx={{
                                 display: "flex",
                                 alignItems: "center",
-                                mb: 0.5,
+                                mb: 0.75,
                               }}
                             >
-                              <LocationOnIcon
-                                fontSize="small"
-                                color="primary"
+                              <BusinessIcon
+                                sx={{
+                                  color: "#ff0030",
+                                  fontSize: "1.1rem",
+                                }}
                               />
                               <Typography
                                 component="label"
                                 sx={{
                                   ml: 1,
                                   fontSize: "0.8rem",
-                                  fontWeight: 500,
+                                  fontWeight: 600,
+                                  color: "#2d3748",
+                                  letterSpacing: "0.3px",
                                 }}
                               >
-                                Location
-                              </Typography>
-                            </Box>
-                            <ComboBox
-                              options={districtsInKerala}
-                              value={values.location || ""}
-                              onChange={(e, newValue) =>
-                                setFieldValue("location", newValue)
-                              }
-                              placeholder="Select your district"
-                              sx={{
-                                width: "100%",
-                                "& .MuiInputBase-root": {
-                                  padding: "8px 12px",
-                                  fontSize: "0.95rem",
-                                },
-                              }}
-                            />
-                            <ErrorMessage
-                              name="location"
-                              component={ErrorText}
-                            />
-                          </FieldContainer>
-                        </Grid>
-
-                        {/* Password field */}
-                        <Grid item xs={12}>
-                          <FieldContainer>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                mb: 0.5,
-                              }}
-                            >
-                              <LockIcon fontSize="small" color="primary" />
-                              <Typography
-                                component="label"
-                                sx={{
-                                  ml: 1,
-                                  fontSize: "0.8rem",
-                                  fontWeight: 500,
-                                }}
-                              >
-                                Password
+                                Business Name
                               </Typography>
                             </Box>
                             <Field
                               as={StyledInput}
-                              name="password"
-                              placeholder="Create a strong password"
-                              type={showPassword ? "text" : "password"}
-                              endAdornment={
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    onClick={togglePasswordVisibility}
-                                    edge="end"
-                                    sx={{ mr: 1, padding: 0 }}
-                                    size="small"
-                                  >
-                                    {showPassword ? (
-                                      <VisibilityOff fontSize="small" />
-                                    ) : (
-                                      <Visibility fontSize="small" />
-                                    )}
-                                  </IconButton>
-                                </InputAdornment>
-                              }
+                              name="business_name"
+                              placeholder="Enter your business name"
                             />
                             <ErrorMessage
-                              name="password"
+                              name="business_name"
                               component={ErrorText}
                             />
                           </FieldContainer>
                         </Grid>
+                      )}
 
-                        {/* Physical store switch */}
-                        <Grid item xs={12}>
-                          <FormControlLabel
-                            control={
-                              <Switch
-                                checked={hasPhysicalStore}
-                                onChange={() => {
-                                  setHasPhysicalStore(!hasPhysicalStore);
-                                  setFieldValue(
-                                    "has_physical_store",
-                                    !hasPhysicalStore
-                                  );
-                                }}
-                                size="small"
-                                sx={{
-                                  "& .MuiSwitch-switchBase.Mui-checked": {
-                                    color: "#667eea",
-                                  },
-                                  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
-                                    {
-                                      backgroundColor: "#667eea",
-                                    },
-                                }}
-                              />
-                            }
-                            label={
-                              <Typography variant="body2">
-                                I have a physical store
-                              </Typography>
-                            }
-                          />
-                        </Grid>
-
-                        {/* Business name field - conditional */}
-                        {hasPhysicalStore && (
-                          <Grid item xs={12}>
-                            <FieldContainer>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  mb: 0.5,
-                                }}
-                              >
-                                <BusinessIcon
-                                  fontSize="small"
-                                  color="primary"
-                                />
-                                <Typography
-                                  component="label"
-                                  sx={{
-                                    ml: 1,
-                                    fontSize: "0.8rem",
-                                    fontWeight: 500,
-                                  }}
-                                >
-                                  Business Name
-                                </Typography>
-                              </Box>
-                              <Field
-                                as={StyledInput}
-                                name="business_name"
-                                placeholder="Enter your business name"
-                              />
-                              <ErrorMessage
-                                name="business_name"
-                                component={ErrorText}
-                              />
-                            </FieldContainer>
-                          </Grid>
-                        )}
-
-                        {/* Submit button */}
-                        <Grid item xs={12}>
-                          <SubmitButton
-                            type="submit"
-                            disabled={loading || !isValid}
-                          >
-                            {loading ? (
-                              <CircularProgress size={20} color="inherit" />
-                            ) : (
-                              "Create Account"
-                            )}
-                          </SubmitButton>
-                        </Grid>
+                      <Grid item xs={12}>
+                        <SubmitButton
+                          type="submit"
+                          disabled={loading || !isValid}
+                        >
+                          {loading ? (
+                            <CircularProgress
+                              size={24}
+                              sx={{ color: "#ffffff" }}
+                            />
+                          ) : (
+                            "Create Account"
+                          )}
+                        </SubmitButton>
                       </Grid>
+                    </Grid>
 
-                      <Divider sx={{ my: 2.5 }}>
-                        <Typography variant="caption" color="text.secondary">
-                          OR
-                        </Typography>
-                      </Divider>
+                    <Divider
+                      sx={{
+                        my: 3,
+                        borderColor: "#e8ecf1",
+                      }}
+                    >
+                      <Typography variant="caption" sx={{ color: "#a0aec0" }}>
+                        OR
+                      </Typography>
+                    </Divider>
 
-                      <Box sx={{ textAlign: "center" }}>
-                        <Typography variant="body2" color="text.secondary">
-                          Already have an account?{" "}
+                    <Box sx={{ textAlign: "center" }}>
+                      <Typography variant="body2" sx={{ color: "#718096" }}>
+                        Already have an account?{" "}
+                        <Box
+                          component="a"
+                          href="/signin"
+                          sx={{
+                            color: "#ff0030",
+                            textDecoration: "none",
+                            fontWeight: 700,
+                            "&:hover": { textDecoration: "underline" },
+                          }}
+                        >
+                          Sign In
+                        </Box>
+                      </Typography>
+                      <Box mt={1.5}>
+                        <Typography variant="caption" sx={{ color: "#a0aec0" }}>
                           <Box
                             component="a"
-                            href="/signin"
+                            href="/forgot-password"
                             sx={{
-                              color: "#667eea",
+                              color: "#a0aec0",
                               textDecoration: "none",
-                              fontWeight: 600,
-                              "&:hover": { textDecoration: "underline" },
+                              "&:hover": { color: "#ff0030" },
                             }}
                           >
-                            Sign In
+                            Forgot Password?
                           </Box>
                         </Typography>
-                        <Box mt={1}>
-                          <Typography variant="caption" color="text.secondary">
-                            <Box
-                              component="a"
-                              href="/forgot-password"
-                              sx={{
-                                color: "text.secondary",
-                                textDecoration: "none",
-                                "&:hover": { color: "#667eea" },
-                              }}
-                            >
-                              Forgot Password?
-                            </Box>
-                          </Typography>
-                        </Box>
                       </Box>
-                    </Form>
-                  )}
-                </Formik>
-              </Box>
-            </Grid>
+                    </Box>
+                  </Form>
+                )}
+              </Formik>
+            </Box>
           </Grid>
-        </StyledPaper>
-      </Container>
+        </Grid>
+      </StyledPaper>
     </Box>
   );
 }

@@ -3,18 +3,18 @@
 .explore-cars-screen {
   width: 100%;
   min-height: 100vh;
-  background: #f4f6f9;
+  background: var(--light);
   font-family: 'DM Sans', sans-serif;
 }
 
 .layout-container {
   display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 340px 1fr;
+  gap: 2rem;
   width: 100%;
   max-width: 1800px;
   margin: 0 auto;
-  padding: 1.5rem 1.25rem;
+  padding: 1.5rem 1.25rem 3rem;
 }
 
 .filter-column {
@@ -23,7 +23,7 @@
   height: calc(100vh - 3rem);
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #e2e8f0 transparent;
+  scrollbar-color: var(--border) transparent;
 }
 
 .filter-column::-webkit-scrollbar {
@@ -35,75 +35,126 @@
 }
 
 .filter-column::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
+  background: var(--border);
   border-radius: 4px;
 }
 
 .filter-section {
-  background: #ffffff;
-  border-radius: 16px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
   padding: 0;
-  border: 1px solid #e8edf3;
+  border: 1px solid var(--border);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .content-column {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
   min-width: 0;
 }
 
 .content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .sort-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
-  border: 1px solid #e8edf3;
-  border-radius: 12px;
-  padding: 0.625rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .sort-bar-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .sort-bar-label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  color: var(--gray-dark);
+  letter-spacing: 0.02em;
 }
 
-/* Mobile Filter Button */
+.sort-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+}
+
+.view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--gray);
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.view-btn:hover {
+  color: var(--dark);
+  background: var(--white);
+}
+
+.view-active {
+  background: var(--white);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.view-active:hover {
+  background: var(--white);
+  color: var(--primary);
+}
+
 .mobile-filter-button {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: #111827;
-  color: white;
+  padding: 8px 18px;
+  background: var(--primary);
+  color: var(--white);
   border: none;
   border-radius: 40px;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition);
   position: relative;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .mobile-filter-button:hover {
-  background: #1f2937;
-  transform: translateY(-1px);
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
 .mobile-filter-button svg {
@@ -116,11 +167,11 @@
   right: -6px;
   background: #ef4444;
   color: white;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 20px;
-  min-width: 18px;
+  min-width: 20px;
   text-align: center;
 }
 
@@ -128,21 +179,34 @@
   min-width: 180px !important;
 }
 
+.sort-select-container .MuiOutlinedInput-root {
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+}
+
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.cards-list {
+  grid-template-columns: 1fr;
+}
+
+.cards-list .car-card {
+  max-width: 100%;
 }
 
 .car-card {
   width: 100%;
   min-width: 0;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   cursor: pointer;
 }
 
 .car-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .loader-container,
@@ -157,29 +221,43 @@
 
 .error-message {
   color: #ef4444;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .pagination-container {
   display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 1rem;
   padding: 1rem 0;
+  flex-wrap: wrap;
 }
 
-.pagination-container .MuiPaginationItem-root.Mui-selected {
-  background: #111827 !important;
-  color: #fff !important;
+.pagination-info {
+  font-size: 0.85rem;
+  color: var(--gray-dark);
+  font-weight: 500;
 }
 
-/* Desktop Filter - Always visible */
 @media (min-width: 901px) {
   .mobile-filter-button {
     display: none;
   }
 }
 
-/* Mobile Responsive */
+@media (max-width: 1100px) {
+  .layout-container {
+    grid-template-columns: 300px 1fr;
+    gap: 1.5rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
 @media (max-width: 900px) {
   .layout-container {
     grid-template-columns: 1fr;
@@ -191,6 +269,20 @@
     position: static;
     height: auto;
     display: none;
+  }
+
+  .sort-bar {
+    padding: 0.75rem 1rem;
+  }
+
+  .sort-bar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-select-container {
+    min-width: 140px !important;
+    flex: 1;
   }
 }
 
@@ -206,39 +298,76 @@
 
   .sort-bar {
     padding: 0.5rem 0.75rem;
+    flex-direction: column;
+    align-items: stretch;
   }
-  
-  .sort-bar-left {
-    flex: 1;
-  }
-  
-  .sort-select-container {
-    min-width: 140px !important;
-  }
-}
 
-@media (max-width: 576px) {
-  .cards-grid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+  .sort-bar-left {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .sort-bar-right {
+    width: 100%;
   }
 
   .sort-select-container {
     width: 100% !important;
   }
 
-  .sort-bar {
+  .pagination-container {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 1rem;
   }
-  
-  .sort-bar-left {
-    width: 100%;
+
+  .pagination-info {
+    text-align: center;
+    font-size: 0.8rem;
   }
-  
+}
+
+@media (max-width: 576px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .car-card {
+    min-width: 0;
+  }
+
   .mobile-filter-button {
     width: 100%;
     justify-content: center;
+  }
+
+  .sort-bar-left {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .sort-bar-right {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sort-select-container {
+    width: 100% !important;
+  }
+
+  .content-wrapper {
+    gap: 0.75rem;
+  }
+
+  .pagination-container .MuiPagination-root {
+    font-size: 0.75rem;
+  }
+
+  .pagination-container .MuiPaginationItem-root {
+    padding: 0 8px;
+    min-width: 28px;
+    height: 28px;
   }
 }

@@ -14,13 +14,11 @@ import axios from "axios";
 import { GET_ALL_CARS } from "../../config/api";
 import Loader from "../../components/Loader/Loader";
 import EmptyState from "../../components/EmptyState/EmptyState";
-// import Banner from "../../components/Banner/Banner";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { carBodyTypes } from "../../dummyData/bodyTypes";
 import CategoryCars from "../../components/CategoryCars/CategoryCars";
 import Banner2 from "../../components/Banner2/Banner2";
-
 import CarCategoriesSection from "../../components/CarCategoriesSection/CarCategoriesSection";
 import AdvSection from "../../sections/AdvSection/AdvSection";
 import { LOCAL_STORAGE_KEY } from "../../store/useAuthStore";
@@ -45,6 +43,9 @@ function HomeScreen() {
   const currentTab = carBodyTypes.find((tab) => tab.index == 2);
   const [selectedTab, setSelectedTab] = useState(currentTab);
   const [originalCars, setOriginalCars] = useState([]);
+  const [categoryCars, setCategoryCars] = useState({});
+  const [categoryLoading, setCategoryLoading] = useState({});
+  const categorySliderRefs = useRef({});
 
   const storedSearches =
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
@@ -91,15 +92,11 @@ function HomeScreen() {
     }
   };
 
-  const scrollLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -300, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 300, behavior: "smooth" });
+  const scrollCategory = (category, direction) => {
+    const ref = categorySliderRefs.current[category];
+    if (ref) {
+      const scrollAmount = direction === "left" ? -280 : 280;
+      ref.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
 
@@ -113,7 +110,6 @@ function HomeScreen() {
             res.data.data,
             storedSearches
           );
-
           setCars(sortedInitialCars);
         }
       } catch (error) {
@@ -125,17 +121,151 @@ function HomeScreen() {
     fetchCars();
   }, []);
 
+  useEffect(() => {
+    const fetchCategoryCars = async () => {
+      const categories = carBodyTypes?.slice(0, 4) || [];
+      for (const type of categories) {
+        try {
+          setCategoryLoading((prev) => ({ ...prev, [type.value]: true }));
+          const res = await axios.get(`${GET_ALL_CARS}?category=${type.value}`);
+          if (res && res.data?.data) {
+            const sorted = sortCarsByPreviousSearches(
+              res.data.data,
+              storedSearches
+            );
+            setCategoryCars((prev) => ({ ...prev, [type.value]: sorted }));
+          }
+        } catch (error) {
+          console.error(`Error fetching ${type.value} cars:`, error);
+        } finally {
+          setCategoryLoading((prev) => ({ ...prev, [type.value]: false }));
+        }
+      }
+    };
+    fetchCategoryCars();
+  }, []);
+
   return (
     <div className="screens" id="Choose by Category">
-      <div className="container-fluid">
+      <div className="">
         <Banner2 />
       </div>
 
       <div>
-        <div className="mt-4">
+        <div className="mt-0">
           <div className="latst-cars-section">
-            <CategoryGrid />
-            <div className="container">
+            <div className="container mt-5">
+              <div className="profile-content">
+                <TitleHeader
+                  title1={"Cars by "}
+                  title2={"Category"}
+                  option={"View all"}
+                  optionLink={`/used-cars?.category=sedan`}
+                />
+
+                <div className="tabs-container">
+                  <Tabs>
+                    <div className="tab-scroll-wrapper">
+                      <button
+                        className="tab-scroll-button left"
+                        onClick={() => scrollTabs("left")}
+                        aria-label="Scroll tabs left"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 19l-7-7 7-7"
+                          />
+                        </svg>
+                      </button>
+
+                      <TabList ref={tabListRef}>
+                        {carBodyTypes?.slice(0, 3).map((type, index) => (
+                          <Tab key={index}>{type.text}</Tab>
+                        ))}
+                      </TabList>
+
+                      <button
+                        className="tab-scroll-button right"
+                        onClick={() => scrollTabs("right")}
+                        aria-label="Scroll tabs right"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {carBodyTypes?.slice(0, 4).map((type, index) => (
+                      <TabPanel key={index}>
+                        <div className="category-slider-wrapper">
+                          {categoryLoading[type.value] ? (
+                            <Loader />
+                          ) : categoryCars[type.value]?.length === 0 ? (
+                            <EmptyState />
+                          ) : (
+                            <>
+                              <button
+                                className="category-slider-btn left"
+                                onClick={() =>
+                                  scrollCategory(type.value, "left")
+                                }
+                              >
+                                <ChevronLeft />
+                              </button>
+                              <div
+                                className="category-slider"
+                                ref={(el) => {
+                                  if (el)
+                                    categorySliderRefs.current[type.value] = el;
+                                }}
+                              >
+                                {categoryCars[type.value]?.map((car, idx) => (
+                                  <div
+                                    className="category-slider-item"
+                                    key={idx}
+                                  >
+                                    <Card
+                                      car={car}
+                                      editable={false}
+                                      category={type.text}
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                              <button
+                                className="category-slider-btn right"
+                                onClick={() =>
+                                  scrollCategory(type.value, "right")
+                                }
+                              >
+                                <ChevronRight />
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </TabPanel>
+                    ))}
+                  </Tabs>
+                </div>
+              </div>
+            </div>
+            <div className="container mt-2">
               <h3 className="text-center fw-bold">
                 <span className="quality-text">
                   Latest Cars
@@ -152,7 +282,7 @@ function HomeScreen() {
                       fill="none"
                     />
                   </svg>
-                </span>{" "}
+                </span>
               </h3>
               <div className="mt-4">
                 {loading ? (
@@ -179,81 +309,10 @@ function HomeScreen() {
       <div className="mt-5">
         <CarCategoriesSection />
       </div>
-      <div className="container mt-5">
-        <div className="profile-content">
-          <TitleHeader
-            title1={"Cars by "}
-            title2={"Category"}
-            option={"View all"}
-            optionLink={`/used-cars?.category=sedan`}
-          />
-
-          <div className="tabs-container">
-            <Tabs>
-              <div className="tab-scroll-wrapper">
-                <button
-                  className="tab-scroll-button left"
-                  onClick={() => scrollTabs("left")}
-                  aria-label="Scroll tabs left"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-
-                <TabList ref={tabListRef}>
-                  {carBodyTypes?.slice(0, 3).map((type, index) => (
-                    <Tab key={index}>{type.text}</Tab>
-                  ))}
-                </TabList>
-
-                <button
-                  className="tab-scroll-button right"
-                  onClick={() => scrollTabs("right")}
-                  aria-label="Scroll tabs right"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              {carBodyTypes?.slice(0, 4).map((type, index) => (
-                <TabPanel key={index}>
-                  <CategoryCars category={type.value} />
-                </TabPanel>
-              ))}
-            </Tabs>
-          </div>
-        </div>
-      </div>
-      {/* <div className="">
-        <FeaturesSection />
-      </div> */}
-
-      <div className="mt-4">{/* <AdvSection /> */}</div>
 
       <div className="mt-0">
         <HowItWorks />
-        {/* <div className="mt-0">
-          <NewsAndResources />
-        </div> */}
-        {/* <div className="mt-0">
-          <Counter />
-        </div> */}
-        {/* <div>
-          <PopularBrandsSection />
-        </div> */}
+
         <div className="mt-0">
           <FAQSection />
         </div>

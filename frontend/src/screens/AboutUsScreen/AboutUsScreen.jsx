@@ -54,49 +54,6 @@ const AboutUsScreen = () => {
 
   return (
     <div className="au-wrap">
-      <section className="au-hero">
-        <div className="au-hero-bg" />
-        <div className="au-hero-inner">
-          <div className="au-hero-label">About CarAuras</div>
-          <h1 className="au-hero-title">
-            Buy & Sell Quality
-            <br />
-            Used Cars with Confidence
-          </h1>
-          <p className="au-hero-sub">
-            CarAuras is Kerala's trusted marketplace connecting buyers directly
-            with verified dealers — no middlemen, no hidden fees.
-          </p>
-          <div className="au-hero-actions">
-            <button
-              className="au-btn-primary"
-              onClick={() => (window.location.href = "/used-cars")}
-            >
-              Browse Cars <FaArrowRight />
-            </button>
-            <button className="au-btn-ghost" onClick={handleSellCar}>
-              List Your Vehicle
-            </button>
-          </div>
-          <div className="au-hero-stats">
-            <div className="au-stat">
-              <span className="au-stat-num">{data?.cars ?? 0}+</span>
-              <span className="au-stat-label">Listings</span>
-            </div>
-            <div className="au-stat-divider" />
-            <div className="au-stat">
-              <span className="au-stat-num">{data?.customers ?? 0}+</span>
-              <span className="au-stat-label">Happy Buyers</span>
-            </div>
-            <div className="au-stat-divider" />
-            <div className="au-stat">
-              <span className="au-stat-num">{data?.dealers ?? 0}+</span>
-              <span className="au-stat-label">Trusted Dealers</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="au-what">
         <div className="au-container">
           <div className="au-what-grid">
@@ -106,7 +63,7 @@ const AboutUsScreen = () => {
                 A smarter way to buy or sell a used car
               </h2>
               <p className="au-body">
-                CarAuras was built by automotive enthusiasts who were frustrated
+              WheevoDrive was built by automotive enthusiasts who were frustrated
                 by the complexities of traditional car markets. We created a
                 platform where buyers and sellers meet directly — making the
                 entire experience transparent, fast, and trustworthy.
@@ -129,7 +86,7 @@ const AboutUsScreen = () => {
             <div className="au-what-image">
               <img
                 src="/images/about-wheelzlloop.avif"
-                alt="CarAuras showroom"
+                alt="WheevoDrive showroom"
                 className="au-img"
               />
               <div className="au-img-badge">
@@ -144,7 +101,7 @@ const AboutUsScreen = () => {
       <section className="au-values">
         <div className="au-container">
           <div className="au-section-header">
-            <p className="au-eyebrow">Why CarAuras</p>
+            <p className="au-eyebrow">Why WheevoDrive</p>
             <h2 className="au-section-title">
               Everything you need, nothing you don't
             </h2>
@@ -159,7 +116,7 @@ const AboutUsScreen = () => {
               {
                 icon: <FaUserCheck />,
                 title: "Verified Dealers",
-                desc: "Every dealer on CarAuras is manually reviewed before listing any vehicle.",
+                desc: "Every dealer on WheevoDrive is manually reviewed before listing any vehicle.",
               },
               {
                 icon: <FaTags />,
@@ -196,7 +153,7 @@ const AboutUsScreen = () => {
         <div className="au-container">
           <div className="au-cta-inner">
             <h2>Ready to find your next car?</h2>
-            <p>Join thousands of buyers and sellers on CarAuras today.</p>
+            <p>Join thousands of buyers and sellers on WheevoDrive today.</p>
             <div className="au-cta-btns">
               <button
                 className="au-btn-primary"
@@ -217,7 +174,7 @@ const AboutUsScreen = () => {
           <div className="au-modal">
             <div className="au-modal-icon">🔐</div>
             <h3>Sign in required</h3>
-            <p>You need an account to list a vehicle on CarAuras.</p>
+            <p>You need an account to list a vehicle on WheevoDrive.</p>
             <div className="au-modal-actions">
               <button
                 className="au-btn-primary"

@@ -1,131 +1,150 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./CategoryGrid.css";
-import { FiArrowRight, FiZap } from "react-icons/fi";
+import { FiArrowRight, FiZap, FiAward, FiTag, FiStar } from "react-icons/fi";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 const CategoryGrid = () => {
+  const sliderRefs = useRef({});
+
   const sections = [
     {
-      title: "Popular Body Styles",
-      tag: "Top Choice",
+      title: "Body Styles",
+      tag: "Popular",
+      tagIcon: <FiZap />,
+      tagClass: "tag-blue",
       items: [
         {
-          label: "SUVs",
-          img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=400",
+          label: "SUV",
+          img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=300",
         },
         {
-          label: "Sedans",
-          img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=400",
+          label: "Sedan",
+          img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=300",
         },
         {
-          label: "Hatchbacks",
-          img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=400",
+          label: "Hatchback",
+          img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=300",
         },
         {
-          label: "Coupes",
-          img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=400",
+          label: "Coupe",
+          img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=300",
+        },
+        {
+          label: "Convertible",
+          img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=300",
+        },
+        {
+          label: "Wagon",
+          img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=300",
         },
       ],
-      link: "View all body types",
     },
+
     {
-      title: "Premium Brands",
-      tag: "Certified",
-      items: [
-        {
-          label: "BMW",
-          img: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=400",
-        },
-        {
-          label: "Mercedes",
-          img: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=400",
-        },
-        {
-          label: "Audi",
-          img: "https://images.unsplash.com/photo-1541348263662-e0c86433ac10?auto=format&fit=crop&q=80&w=400",
-        },
-        {
-          label: "Porsche",
-          img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=400",
-        },
-      ],
-      link: "Explore all brands",
-    },
-    {
-      title: "Shop by Budget",
-      tag: "Save Big",
+      title: "Budget",
+      tag: "Deals",
+      tagIcon: <FiTag />,
+      tagClass: "tag-amber",
       items: [
         {
           label: "Under ₹5L",
-          img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400",
+          img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=300",
         },
         {
-          label: "₹5L - ₹10L",
-          img: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=400",
+          label: "₹5L-₹10L",
+          img: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=300",
         },
         {
-          label: "₹10L - ₹20L",
-          img: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=80&w=400",
+          label: "₹10L-₹20L",
+          img: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=80&w=300",
         },
         {
           label: "Luxury",
-          img: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=400",
+          img: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=300",
+        },
+        {
+          label: "Premium",
+          img: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=300",
+        },
+        {
+          label: "Super",
+          img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=300",
         },
       ],
-      link: "Check financing",
-    },
-    {
-      title: "Essential Gear",
-      tag: "New Arrivals",
-      items: [
-        {
-          label: "Cleaning",
-          img: "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&q=80&w=400",
-        },
-        {
-          label: "Wheels",
-          img: "https://images.unsplash.com/photo-1549174138-0387532a8845?auto=format&fit=crop&q=80&w=400",
-        },
-        {
-          label: "Helmets",
-          img: "https://images.unsplash.com/photo-1595123550441-d377e017de6a?auto=format&fit=crop&q=80&w=400",
-        },
-        {
-          label: "Tech",
-          img: "https://images.unsplash.com/photo-1569698134101-f15cde5cd66c?auto=format&fit=crop&q=80&w=400",
-        },
-      ],
-      link: "Shop accessories",
     },
   ];
 
+  const scrollSlider = (sectionIndex, direction) => {
+    const ref = sliderRefs.current[sectionIndex];
+    if (ref) {
+      const scrollAmount = direction === "left" ? -280 : 280;
+      ref.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="category-section-clean">
-      <div className="category-container">
-        {sections.map((section, index) => (
-          <div key={index} className="category-main-card">
-            <div className="card-header-top">
-              <span className="card-tag">
-                <FiZap /> {section.tag}
-              </span>
-              <h2 className="card-main-title">{section.title}</h2>
+    <section className="cg-modern">
+      <div className="cg-modern-header">
+        <h2 className="cg-modern-title">
+          Explore <span className="cg-highlight">Categories</span>
+          <span className="cg-title-dot">.</span>
+        </h2>
+        <p className="cg-modern-sub">Find exactly what you're looking for</p>
+      </div>
+
+      <div className="cg-modern-grid">
+        {sections.map((section, sectionIndex) => (
+          <div key={sectionIndex} className="cg-modern-card">
+            <div className="cg-modern-head">
+              <div className="cg-modern-head-left">
+                <div className={`cg-modern-tag ${section.tagClass}`}>
+                  {section.tagIcon}
+                  {section.tag}
+                </div>
+                <h3 className="cg-modern-head-title">{section.title}</h3>
+              </div>
+              <span className="cg-modern-count">{section.items.length}</span>
             </div>
 
-            <div className="quad-item-grid">
-              {section.items.map((item, i) => (
-                <div key={i} className="quad-item">
-                  <div className="quad-img-container">
-                    <img src={item.img} alt={item.label} loading="lazy" />
-                    <div className="quad-item-overlay">
-                      <span className="quad-label">{item.label}</span>
+            <div className="cg-modern-slider-wrap">
+              <button
+                className="cg-modern-arrow left"
+                onClick={() => scrollSlider(sectionIndex, "left")}
+              >
+                <ChevronLeft />
+              </button>
+
+              <div
+                className="cg-modern-slider"
+                ref={(el) => {
+                  if (el) sliderRefs.current[sectionIndex] = el;
+                }}
+              >
+                {section.items.map((item, i) => (
+                  <div key={i} className="cg-modern-item">
+                    <div className="cg-modern-item-img">
+                      <img src={item.img} alt={item.label} loading="lazy" />
+                      <div className="cg-modern-item-overlay">
+                        <span className="cg-modern-item-name">
+                          {item.label}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              <button
+                className="cg-modern-arrow right"
+                onClick={() => scrollSlider(sectionIndex, "right")}
+              >
+                <ChevronRight />
+              </button>
             </div>
 
-            <a href="#" className="card-footer-link">
-              <span>{section.link}</span>
-              <FiArrowRight className="footer-arrow" />
+            <a href="#" className="cg-modern-link">
+              <span>View all</span>
+              <FiArrowRight />
             </a>
           </div>
         ))}

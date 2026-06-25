@@ -65,7 +65,7 @@
 }
 
 .browse-button:hover {
-  background: #3182ce;
+  background: var(--primary);
   transform: translateY(-2px);
 }
 

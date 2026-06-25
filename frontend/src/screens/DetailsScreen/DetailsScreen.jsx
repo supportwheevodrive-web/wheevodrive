@@ -18,6 +18,15 @@ import {
   FaMapMarkerAlt,
   FaArrowLeft,
   FaCheckCircle,
+  FaCalendarAlt,
+  FaRoad,
+  FaUsers,
+  FaCog,
+  FaShieldAlt,
+  FaStar,
+  FaRegClock,
+  FaWhatsapp,
+  FaEnvelope,
 } from "react-icons/fa";
 import { BsFillGearFill } from "react-icons/bs";
 import { GiCarWheel } from "react-icons/gi";
@@ -29,10 +38,10 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 420,
+  width: 440,
   bgcolor: "background.paper",
-  borderRadius: "16px",
-  boxShadow: "0 24px 64px rgba(0,0,0,0.18)",
+  borderRadius: "20px",
+  boxShadow: "0 32px 80px rgba(0,0,0,0.22)",
   p: 0,
   overflow: "hidden",
   border: "none",
@@ -50,6 +59,7 @@ function DetailsScreen() {
   const [isFavourite, setIsFavourite] = useState(false);
   const [open, setOpen] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -133,7 +143,7 @@ function DetailsScreen() {
   return (
     <div className="dc-wrap">
       <Helmet>
-        <title>{car?.title || car?.brand + " " + car?.model} - CarAuras</title>
+        <title>{car?.title || car?.brand + " " + car?.model} - WheevoDrive</title>
         <meta
           name="description"
           content={`Buy ${car?.brand} ${car?.model} in ${car?.location}. ${car?.kilometers_driven} driven, ${car?.fuel_type} car in good condition.`}
@@ -144,7 +154,7 @@ function DetailsScreen() {
         />
         <meta
           property="og:title"
-          content={`${car?.brand} ${car?.model} - CarAuras`}
+          content={`${car?.brand} ${car?.model} - WheevoDrive`}
         />
         <meta
           property="og:description"
@@ -152,8 +162,8 @@ function DetailsScreen() {
         />
         <meta property="og:image" content={car?.images?.[0]} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://carauras.com/cars/${id}`} />
-        <link rel="canonical" href={`https://carauras.com/cars/${id}`} />
+        <meta property="og:url" content={`https://WheevoDrive.com/cars/${id}`} />
+        <link rel="canonical" href={`https://WheevoDrive.com/cars/${id}`} />
       </Helmet>
 
       <div className="dc-breadcrumb">
@@ -182,6 +192,7 @@ function DetailsScreen() {
                   "https://via.placeholder.com/800x600?text=Image+Not+Available")
               }
               title="car details image"
+              onClick={() => setIsZoomed(!isZoomed)}
             />
             <div className="dc-img-overlay">
               <div className="dc-img-actions">
@@ -215,6 +226,14 @@ function DetailsScreen() {
             >
               {car?.status}
             </div>
+            {isZoomed && (
+              <div
+                className="dc-zoom-overlay"
+                onClick={() => setIsZoomed(false)}
+              >
+                <img src={mainImage} alt="Zoomed" className="dc-zoom-img" />
+              </div>
+            )}
           </div>
 
           <div className="dc-thumbnails">
@@ -245,7 +264,9 @@ function DetailsScreen() {
 
         <div className="dc-info">
           <div className="dc-info-header">
-            <div className="dc-year-tag">{car.year}</div>
+            <div className="dc-year-tag">
+              <FaCalendarAlt /> {car.year}
+            </div>
             <h1 className="dc-car-title">
               {car.brand} {car.model}
             </h1>
@@ -256,10 +277,21 @@ function DetailsScreen() {
                   {car.originalPrice?.toLocaleString()}
                 </span>
               )}
+              <span className="dc-price-badge">Excellent Deal</span>
             </div>
             <div className="dc-location">
               <FaMapMarkerAlt />
               <span>{car.location || "Location not specified"}</span>
+            </div>
+            <div className="dc-rating-row">
+              <div className="dc-stars">
+                <FaStar className="dc-star-filled" />
+                <FaStar className="dc-star-filled" />
+                <FaStar className="dc-star-filled" />
+                <FaStar className="dc-star-filled" />
+                <FaStar className="dc-star-filled" />
+              </div>
+              <span className="dc-rating-text">4.9 (124 reviews)</span>
             </div>
           </div>
 
@@ -283,7 +315,7 @@ function DetailsScreen() {
             <div className="dc-spec-pill">
               <BsFillGearFill />
               <div>
-                <p className="dc-spec-label">Gearbox</p>
+                <p className="dc-spec-label">Transmission</p>
                 <p className="dc-spec-val">{car.transmission}</p>
               </div>
             </div>
@@ -304,12 +336,25 @@ function DetailsScreen() {
               <FaPhone /> Call Seller
             </a>
             {car?.dealer_id?._id !== user?._id && (
-              <button
-                className="dc-btn dc-btn-ghost"
-                onClick={handleNavigatetoChat}
-              >
-                Chat with Dealer
-              </button>
+              <>
+                <button
+                  className="dc-btn dc-btn-whatsapp"
+                  onClick={() =>
+                    window.open(
+                      `https://wa.me/${car?.dealer_id?.phone}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  <FaWhatsapp /> WhatsApp
+                </button>
+                <button
+                  className="dc-btn dc-btn-ghost"
+                  onClick={handleNavigatetoChat}
+                >
+                  <FaEnvelope /> Chat
+                </button>
+              </>
             )}
           </div>
 
@@ -329,6 +374,9 @@ function DetailsScreen() {
                   <FaMapMarkerAlt />{" "}
                   {car?.dealer_id?.location || "Location not specified"}
                 </p>
+                <p className="dc-seller-since">
+                  <FaRegClock /> Member since 2020
+                </p>
               </div>
               <button
                 className="dc-profile-btn"
@@ -338,6 +386,17 @@ function DetailsScreen() {
               >
                 View Profile
               </button>
+            </div>
+          </div>
+
+          <div className="dc-highlights">
+            <div className="dc-highlight-item">
+              <FaShieldAlt />
+              <span>Verified Seller</span>
+            </div>
+            <div className="dc-highlight-item">
+              <FaCheckCircle />
+              <span>Inspection Available</span>
             </div>
           </div>
         </div>
@@ -365,6 +424,38 @@ function DetailsScreen() {
             <div className="dc-overview">
               <h2>Vehicle Description</h2>
               <p>{car.description || "No description available."}</p>
+              <div className="dc-overview-stats">
+                <div className="dc-stat-item">
+                  <FaRoad />
+                  <div>
+                    <span className="dc-stat-label">Mileage</span>
+                    <span className="dc-stat-value">
+                      {car.mileage?.toLocaleString()} mi
+                    </span>
+                  </div>
+                </div>
+                <div className="dc-stat-item">
+                  <FaUsers />
+                  <div>
+                    <span className="dc-stat-label">Seats</span>
+                    <span className="dc-stat-value">{car.seats}</span>
+                  </div>
+                </div>
+                <div className="dc-stat-item">
+                  <FaCog />
+                  <div>
+                    <span className="dc-stat-label">Engine</span>
+                    <span className="dc-stat-value">{car.engine_size}</span>
+                  </div>
+                </div>
+                <div className="dc-stat-item">
+                  <FaPalette />
+                  <div>
+                    <span className="dc-stat-label">Color</span>
+                    <span className="dc-stat-value">{car.color}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -378,6 +469,7 @@ function DetailsScreen() {
                 <SpecItem label="Model" value={car.model} />
                 <SpecItem label="Year" value={car.year} />
                 <SpecItem label="Condition" value={car.condition} />
+                <SpecItem label="Body Type" value={car.body_type} />
               </div>
               <div className="dc-spec-group">
                 <h3>
@@ -386,6 +478,11 @@ function DetailsScreen() {
                 <SpecItem label="Engine" value={car.engine_size} />
                 <SpecItem label="Transmission" value={car.transmission} />
                 <SpecItem label="Fuel Type" value={car.fuel_type} />
+                <SpecItem label="Drivetrain" value={car.drivetrain} />
+                <SpecItem
+                  label="Mileage"
+                  value={car.mileage?.toLocaleString() + " mi"}
+                />
               </div>
               <div className="dc-spec-group">
                 <h3>
@@ -394,13 +491,18 @@ function DetailsScreen() {
                 <SpecItem label="Body Type" value={car.body_type} />
                 <SpecItem label="Color" value={car.color} />
                 <SpecItem label="Doors" value={car.doors} />
+                <SpecItem label="VIN" value={car.vin} />
               </div>
               <div className="dc-spec-group">
                 <h3>
                   <FaChair /> Interior
                 </h3>
                 <SpecItem label="Seats" value={car.seats} />
-                <SpecItem label="VIN" value={car.vin} />
+                <SpecItem label="Upholstery" value={car.upholstery || "—"} />
+                <SpecItem
+                  label="Interior Color"
+                  value={car.interior_color || "—"}
+                />
               </div>
             </div>
           )}
@@ -453,10 +555,11 @@ function DetailsScreen() {
                     title="similar car"
                   />
                   <div className="dc-similar-fuel">{item?.fuel_type}</div>
+                  <div className="dc-similar-year">{item?.year}</div>
                 </div>
                 <div className="dc-similar-info">
                   <p className="dc-similar-name">
-                    {item?.year} {item?.car_name} {item?.model}
+                    {item?.car_name} {item?.model}
                   </p>
                   <p className="dc-similar-price">
                     {(item?.price ?? "").toLocaleString()}
@@ -464,6 +567,7 @@ function DetailsScreen() {
                   <div className="dc-similar-meta">
                     <span>{item?.mileage} mi</span>
                     <span>{item?.transmission}</span>
+                    <span>{item?.fuel_type}</span>
                   </div>
                 </div>
               </div>

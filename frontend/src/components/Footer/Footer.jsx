@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import "./Footer.css";
 import {
-  Facebook,
-  Twitter,
-  Instagram,
-  LinkedIn,
-  YouTube,
   Email,
   LocationOn,
   Phone,
-  Send,
   ArrowUpward,
+  Send,
 } from "@mui/icons-material";
 import XIcon from "@mui/icons-material/X";
-import { FACEBOOK, INSTAGRAM, LINKEDIN, X } from "../../constants/social-urls";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import axios from "axios";
 import { ADD_SUBSCRIPTION_URL } from "../../config/api";
 import Swal from "sweetalert2";
@@ -28,188 +21,116 @@ function Footer() {
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (!email) {
-      Swal.fire({
-        title: "Error",
-        text: "Please enter your email address",
-        icon: "error",
-        confirmButtonColor: "#667eea",
-      });
-      return;
-    }
-
+    if (!email) return;
     try {
       setLoading(true);
-      const res = await axios.post(ADD_SUBSCRIPTION_URL, { email });
+      await axios.post(ADD_SUBSCRIPTION_URL, { email });
       setLoading(false);
-      if (res && res.status === 200) {
-        Swal.fire({
-          title: "Subscription added!",
-          text: "Thank you for subscribing with us!",
-          icon: "success",
-          confirmButtonColor: "#667eea",
-          timer: 2000,
-        });
-        setEmail("");
-      }
-    } catch (error) {
-      console.error("Subscription error:", error);
       Swal.fire({
-        title: "Already Subscribed",
-        text: "This email is already subscribed to our newsletter",
-        icon: "info",
-        confirmButtonColor: "#667eea",
+        title: "Subscribed!",
+        text: "Welcome to WheevoDrive!",
+        icon: "success",
+        confirmButtonColor: "#ff0030",
       });
-      setLoading(false);
       setEmail("");
+    } catch (error) {
+      setLoading(false);
+      Swal.fire({
+        title: "Note",
+        text: "You are already subscribed.",
+        icon: "info",
+        confirmButtonColor: "#ff0030",
+      });
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const footerLinks = {
-    company: {
-      title: "Company",
+  const footerLinks = [
+    {
+      title: "Navigation",
       links: [
         { name: "Home", path: "/" },
-        { name: "About Us", path: "/about-us" },
-        { name: "Contact Us", path: "/contact-us" },
-        // { name: "Careers", path: "/careers" },
+        { name: "Inventory", path: "/used-cars" },
+        { name: "Services", path: "/services" },
         { name: "Blog", path: "/blogs" },
       ],
     },
-    services: {
-      title: "Services",
+    {
+      title: "Support",
       links: [
-        { name: "Find Cars", path: "/used-cars" },
-        // { name: "Sell Your Car", path: "/sell-car" },
-        // { name: "Car Valuation", path: "/valuation" },
-        { name: "Favorites", path: "/favourites" },
-        { name: "Reviews", path: "/reviews" },
+        { name: "About Us", path: "/about-us" },
+        { name: "Contact Us", path: "/contact-us" },
+        { name: "FAQs", path: "/faqs" },
+        { name: "Privacy Policy", path: "/privacy" },
       ],
     },
-    // support: {
-    //   title: "Support",
-    //   links: [
-    //     { name: "Help Center", path: "/help" },
-    //     { name: "FAQs", path: "/faq" },
-    //     { name: "How It Works", path: "/how-it-works" },
-    //     { name: "Safety Tips", path: "/safety-tips" },
-    //     { name: "Report an Issue", path: "/report" },
-    //   ],
-    // },
-    // legal: {
-    //   title: "Legal",
-    //   links: [
-    //     { name: "Terms & Conditions", path: "/terms" },
-    //     { name: "Privacy Policy", path: "/privacy" },
-    //     { name: "Cookie Policy", path: "/cookies" },
-    //     { name: "Disclaimer", path: "/disclaimer" },
-    //   ],
-    // },
-  };
-
-  const socialLinks = [
-    {
-      icon: FacebookIcon,
-      url: "https://www.facebook.com/profile.php?id=61581912191717",
-      color: "#1877f2",
-      name: "Facebook",
-    },
-    {
-      icon: InstagramIcon,
-      url: "https://www.instagram.com/carsauraa/",
-      color: "#e4405f",
-      name: "Instagram",
-    },
-    {
-      icon: XIcon,
-      url: "https://x.com/car_auras",
-      color: "#000000",
-      name: "X",
-    },
-    // { icon: LinkedInIcon, url: LINKEDIN, color: "#0a66c2", name: "LinkedIn" },
-    // {
-    //   icon: YouTubeIcon,
-    //   url: "https://www.youtube.com/@carauras",
-    //   color: "#ff0000",
-    //   name: "YouTube",
-    // },
   ];
 
   return (
-    <footer className="modern-footer">
-      <div className="footer-main">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <div className="brand-logo">
-              <span className="logo-icon"></span>
-              <h2>
-                Car<span>Auras</span>
-              </h2>
+    <footer className="dark-premium-footer">
+      <div className="footer-main-grid">
+        <div className="footer-brand-info">
+          <div className="footer-logo">
+            <h2>
+              Car<span>Auras</span>
+            </h2>
+          </div>
+          <p className="brand-pitch">
+            Kerala's elite platform for premium pre-owned vehicles. Quality,
+            trust, and performance in every drive.
+          </p>
+          <div className="footer-contact-details">
+            <div className="c-item">
+              <Phone /> <span>+91 90000 00000</span>
             </div>
-            <p className="brand-description">
-              Kerala's most trusted platform for buying and selling used cars.
-              We connect car enthusiasts with their dream vehicles.
-            </p>
-            <div className="contact-info">
-              <div className="contact-item">
-                <Email className="contact-icon" />
-                <span>infoatcarauras@gmail.com</span>
-              </div>
-              {/* <div className="contact-item">
-                <Phone className="contact-icon" />
-                <span>+91 98765 43210</span>
-              </div> */}
-              <div className="contact-item">
-                <LocationOn className="contact-icon" />
-                <span>Kerala, India</span>
-              </div>
+            <div className="c-item">
+              <Email /> <span>info@WheevoDrive.com</span>
+            </div>
+            <div className="c-item">
+              <LocationOn /> <span>Kochi, Kerala, India</span>
             </div>
           </div>
+        </div>
 
-          {Object.entries(footerLinks).map(([key, section]) => (
-            <div key={key} className="footer-links">
-              <h4>{section.title}</h4>
-              <ul>
-                {section.links.map((link, index) => (
-                  <li key={index}>
-                    <a href={link.path}>{link.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        {footerLinks.map((section, idx) => (
+          <div key={idx} className="footer-nav-col">
+            <h4>{section.title}</h4>
+            <ul>
+              {section.links.map((link, i) => (
+                <li key={i}>
+                  <a href={link.path}>{link.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+        <div className="footer-social-col">
+          <h4>Follow Us</h4>
+          <div className="social-pill-group">
+            <a href="https://facebook.com" className="social-pill">
+              <FacebookIcon />
+            </a>
+            <a href="https://instagram.com" className="social-pill">
+              <InstagramIcon />
+            </a>
+            <a href="https://x.com" className="social-pill">
+              <XIcon />
+            </a>
+            <a href="https://youtube.com" className="social-pill">
+              <YouTubeIcon />
+            </a>
+          </div>
         </div>
       </div>
 
-      <div className="footer-bottom">
-        <div className="bottom-content">
-          <div className="copyright">
-            <p>
-              &copy; {new Date().getFullYear()} CarAuras. All rights reserved.
-            </p>
-          </div>
-
-          <div className="social-links">
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                aria-label={social.name}
-                style={{ "--hover-color": social.color }}
-              >
-                <social.icon />
-              </a>
-            ))}
-          </div>
-
-          <button className="scroll-top" onClick={scrollToTop}>
+      <div className="footer-bottom-bar">
+        <div className="bottom-bar-inner">
+          <p>
+            © {new Date().getFullYear()} WheevoDrive. High Performance Marketplace.
+          </p>
+          <button className="scroll-top-btn" onClick={scrollToTop}>
             <ArrowUpward />
           </button>
         </div>

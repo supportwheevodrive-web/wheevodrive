@@ -1,5 +1,5 @@
 .profile-screen-container {
-  padding: 2rem;
+  /* padding: 2rem; */
   background-color: #f8f9fa;
   min-height: 100vh;
 }
@@ -58,7 +58,7 @@
 .react-tabs__tab-list {
   border-bottom: 1px solid #e0e0e0;
   margin: 0;
-  padding: 0 40px; /* Space for arrows */
+
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -169,7 +169,7 @@
 }
 
 .add-car-btn {
-  background-color: var(--primary-color);
+  background-color: var(--primary);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -183,7 +183,6 @@
 }
 
 .add-car-btn:hover {
-  background-color: #606cbc;
   transform: translateY(-2px);
 }
 

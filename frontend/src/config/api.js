@@ -12,8 +12,6 @@ export const REACT_ENV = "development";
 export const BACKEND_URL =
   REACT_ENV === "production"
     ? "https://carauras-1.onrender.com"
-    : REACT_ENV === "development"
-    ? "https://carauras-dev-backend.onrender.com"
     : "http://localhost:5000";
 
 export const PROFILE_URL = `${BACKEND_URL}/api/v1/user/me`;

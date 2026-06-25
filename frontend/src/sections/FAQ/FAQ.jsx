@@ -20,7 +20,7 @@ function FAQSection() {
         "Once logged in, go to your profile, and click on post a car, provide the details of your car, and submit the form.",
     },
     {
-      question: "What fees does CarAuras charge?",
+      question: "What fees does WheevoDrive charge?",
       answer:
         "Posting a car is free, but we charge a small fee for premium features like highlighting your listing.",
     },
