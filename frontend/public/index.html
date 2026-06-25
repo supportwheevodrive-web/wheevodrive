@@ -1,125 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/images/logo.png" />
 
-  <!-- SEO Meta Tags -->
-  <title>CarAuras | Used Cars in Kochi & Kerala - Best Deals Online</title>
+  <!-- Primary SEO Meta Tags -->
+  <title>Wheevodrive | Buy & Sell Used Cars in Kerala – Best Deals in Kochi, Trivandrum & Calicut</title>
   <meta name="description"
-    content="Buy & sell used cars in Kerala at CarAuras. Best deals on second hand cars, certified pre-owned vehicles with warranty. Largest collection of used cars in Kochi, Trivandrum, Calicut & across Kerala." />
+    content="Wheevodrive is Kerala's most trusted used car marketplace. Browse certified pre-owned cars with warranty in Kochi, Trivandrum, Calicut & across Kerala. Best deals on second hand cars online." />
   <meta name="keywords"
-    content="used cars in kochi, second hand cars in kerala, buy used cars online, trusted used cars in kerala, second hand cars kochi">
-
-
-  <!-- Open Graph / Social Media Meta Tags -->
-  <meta property="og:title"
-    content="CarAuras - Best Used Cars in Kerala | Second Hand Cars Dealership | Used cars sale website" />
-  <meta property="og:description"
-    content="Buy & sell used cars in Kerala at CarAuras. Best deals on second hand cars with warranty across Kerala." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://carauras.com/" />
-  <meta property="og:image" content="%PUBLIC_URL%/images/logo.png" />
-  <meta property="og:site_name" content="CarAuras" />
-  <meta property="og:locale" content="en_IN" />
-
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="CarAuras - Best Used Cars in Kerala" />
-  <meta name="twitter:description"
-    content="Best deals on second hand cars in Kerala. Certified pre-owned vehicles with warranty." />
-  <meta name="twitter:image" content="%PUBLIC_URL%/images/logo.png" />
+    content="used cars in kochi, second hand cars in kerala, buy used cars online kerala, certified pre-owned cars kerala, used cars trivandrum, used cars calicut, second hand cars kochi, trusted used car dealer kerala, pre-owned cars kerala, wheevodrive" />
+  <meta name="author" content="Wheevodrive" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
   <!-- Viewport & Theme -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://carauras.com/" />
+  <link rel="canonical" href="https://wheevodrive.com/" />
+
+  <!-- Geo & Language -->
+  <meta name="geo.region" content="IN-KL" />
+  <meta name="geo.placename" content="Kochi, Kerala, India" />
+  <meta name="geo.position" content="9.9312;76.2673" />
+  <meta name="ICBM" content="9.9312, 76.2673" />
+  <link rel="alternate" hreflang="en-in" href="https://wheevodrive.com/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wheevodrive.com/" />
+  <meta property="og:site_name" content="Wheevodrive" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:title"
+    content="Wheevodrive – Buy & Sell Used Cars in Kerala | Certified Pre-Owned Cars" />
+  <meta property="og:description"
+    content="Kerala's most trusted used car marketplace. Certified pre-owned vehicles with warranty across Kochi, Trivandrum, Calicut & all of Kerala. Best deals online." />
+  <meta property="og:image" content="https://wheevodrive.com/images/og-banner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Wheevodrive – Used Cars in Kerala" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@Wheevodrive" />
+  <meta name="twitter:title" content="Wheevodrive – Best Used Cars in Kerala" />
+  <meta name="twitter:description"
+    content="Buy & sell certified pre-owned cars in Kerala. Best deals in Kochi, Trivandrum & Calicut." />
+  <meta name="twitter:image" content="https://wheevodrive.com/images/og-banner.png" />
+  <meta name="twitter:image:alt" content="Wheevodrive – Used Cars Kerala" />
 
   <!-- Favicon & App Icons -->
-  <link rel="icon" href="%PUBLIC_URL%/images/logo.png" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/logo.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/images/apple-touch-icon.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-  <!-- Geo & Business Meta Tags -->
-  <meta name="geo.region" content="IN-KL" />
-  <meta name="geo.placename" content="Kerala" />
-  <meta name="robots" content="index, follow" />
+  <!-- Performance: DNS Prefetch & Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
 
-  <!-- Bootstrap CSS with Preload -->
+  <!-- Critical image preload -->
+  <link rel="preload" as="image" href="/images/intro.png" fetchpriority="high" />
+
+  <!-- Bootstrap CSS -->
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" as="style"
     onload="this.onload=null;this.rel='stylesheet'"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <!-- Performance Optimizations -->
-  <link rel="preload" as="image" href="/images/intro.png" type="image/avif" />
-
-  <!-- Schema.org Markup for Local Business -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "AutoDealer",
-      "name": "CarAuras",
-      "description": "Leading used car dealership in Kerala offering certified pre-owned vehicles",
-      "url": "https://WheevoDrive.com/",
-      "logo": "https://WheevoDrive.com/images/logo.png",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kochi",
-        "addressRegion": "Kerala",
-        "postalCode": "682030",
-        "addressCountry": "IN"
-      },
-      "priceRange": "₹100000-5000000",
-      <!-- "sameAs": [
-        "https://www.facebook.com/profile.php?id=61565890412918",
-        "https://www.instagram.com/wheelz_loop",
-        "https://x.com/WheelzLoop",
-        "https://www.linkedin.com/in/wheelzloop-used-car-selling-platform-baa71b352/"
-      ] -->
-    }
-  </script>
-
-
-  <!-- Google adsense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7533798916049340"
-  crossorigin="anonymous"></script>
-  <!-- <link rel="preload" as="image" href="/images/wheelzloop-main-img.webp" type="image/webp" /> -->
-
-  
-
-</head>
-
-<body>
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
   <noscript>
-    <strong>WheevoDrive requires JavaScript to work properly. Please enable JavaScript to continue.</strong>
-    <p>WheevoDrive is Kerala's trusted used car marketplace offering the best selection of certified pre-owned vehicles
-      across Kochi, Trivandrum, Calicut and all Kerala.</p>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
   </noscript>
-  <div id="root"></div>
 
-  <!--Google analytics-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZLRYCCW9P3">
+  <!-- Font Awesome (deferred for performance) -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'" crossorigin="anonymous" />
+
+  <!-- Schema.org: AutoDealer (Local Business) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoDealer",
+    "name": "Wheevodrive",
+    "description": "Kerala's most trusted used car marketplace offering certified pre-owned vehicles across Kochi, Trivandrum, Calicut and all of Kerala.",
+    "url": "https://wheevodrive.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wheevodrive.com/images/logo.png",
+      "width": 200,
+      "height": 60
+    },
+    "image": "https://wheevodrive.com/images/og-banner.png",
+    "telephone": "+91-XXXXXXXXXX",
+    "email": "support@wheevodrive.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Your Street Address",
+      "addressLocality": "Kochi",
+      "addressRegion": "Kerala",
+      "postalCode": "682030",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 9.9312,
+      "longitude": 76.2673
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    ],
+    "priceRange": "₹1,00,000 – ₹50,00,000",
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "Cash, UPI, Bank Transfer, EMI",
+    "areaServed": [
+      { "@type": "City", "name": "Kochi" },
+      { "@type": "City", "name": "Trivandrum" },
+      { "@type": "City", "name": "Calicut" },
+      { "@type": "State", "name": "Kerala" }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61565890412918",
+      "https://www.instagram.com/wheevodrive",
+      "https://x.com/Wheevodrive",
+      "https://www.linkedin.com/company/wheevodrive"
+    ]
+  }
   </script>
+
+  <!-- Schema.org: WebSite with SearchAction (Sitelinks Search Box) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Wheevodrive",
+    "url": "https://wheevodrive.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://wheevodrive.com/cars?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Schema.org: BreadcrumbList (Homepage) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://wheevodrive.com/"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Schema.org: FAQPage (boosts rich snippets) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I buy a used car on Wheevodrive?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Browse our listings, select your preferred car, and contact us directly via the listing page. Our team will assist you through the inspection, documentation, and purchase process."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are Wheevodrive cars certified and inspected?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Every car listed on Wheevodrive goes through a thorough multi-point inspection to ensure quality and transparency for the buyer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which cities in Kerala does Wheevodrive serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Wheevodrive serves used car buyers and sellers across Kerala, including Kochi, Trivandrum, Calicut, Thrissur, and other major cities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I sell my car on Wheevodrive?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! You can list your used car on Wheevodrive for free. Simply create an account, upload your car details and photos, and our team will help connect you with genuine buyers."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google AdSense (deferred) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7533798916049340"
+    crossorigin="anonymous"></script>
+
+  <!-- Google Analytics (deferred) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZLRYCCW9P3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
-    gtag('config', 'G-ZLRYCCW9P3');
+    gtag('config', 'G-ZLRYCCW9P3', { anonymize_ip: true });
   </script>
+</head>
 
+<body>
+  <noscript>
+    <strong>Wheevodrive requires JavaScript to work properly. Please enable JavaScript to continue.</strong>
+    <p>Wheevodrive is Kerala's trusted used car marketplace. Find the best deals on certified pre-owned vehicles
+      across Kochi, Trivandrum, Calicut and all of Kerala. Browse second hand cars with warranty online.</p>
+  </noscript>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+  <div id="root"></div>
+
+  <!-- Bootstrap JS (deferred) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
     integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
     crossorigin="anonymous"></script>
 </body>

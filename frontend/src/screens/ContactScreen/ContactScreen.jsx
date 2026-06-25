@@ -169,7 +169,7 @@ function ContactScreen() {
                     <input
                       type="text"
                       name="name"
-                      placeholder="E.g. Rahul Sharma"
+                      placeholder="Your name"
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -180,7 +180,7 @@ function ContactScreen() {
                     <input
                       type="email"
                       name="email"
-                      placeholder="rahul@example.com"
+                      placeholder="email@example.com"
                       value={formData.email}
                       onChange={handleChange}
                       required
