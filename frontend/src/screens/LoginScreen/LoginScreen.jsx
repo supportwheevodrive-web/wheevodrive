@@ -55,7 +55,6 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     },
     "&:hover fieldset": {
       borderColor: "#ff0030",
-      backgroundColor: "#ffffff",
     },
     "&.Mui-focused fieldset": {
       borderColor: "#ff0030",
@@ -156,6 +155,7 @@ function LoginScreen() {
           color: "#1a1a2e",
         }).then(() => {
           navigate("/");
+          window.location.reload();
         });
       } else {
         Swal.fire({

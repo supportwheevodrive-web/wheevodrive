@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import MultiStepFormContext from "./MultiStepFormContext";
 import { Formik } from "formik";
 import Input from "antd/es/input";
@@ -13,6 +13,7 @@ import {
   CalendarOutlined,
   DollarOutlined,
   CheckCircleOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { car_brands, car_conditions } from "../../dummyData/carBrands";
 import { years } from "../../dummyData/years";
@@ -23,6 +24,17 @@ const { Option } = Select;
 function BasicInformation() {
   const { basicDetails, setBasicDetails, next } =
     useContext(MultiStepFormContext);
+  const [brandOptions, setBrandOptions] = useState(car_brands);
+  const [isAddingBrand, setIsAddingBrand] = useState(false);
+  const [newBrand, setNewBrand] = useState("");
+
+  const handleAddBrand = () => {
+    if (newBrand.trim() && !brandOptions.includes(newBrand.trim())) {
+      setBrandOptions([...brandOptions, newBrand.trim()]);
+      setNewBrand("");
+      setIsAddingBrand(false);
+    }
+  };
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
@@ -90,26 +102,81 @@ function BasicInformation() {
                   <label style={{ fontWeight: 500, color: "#333" }}>
                     Brand*
                   </label>
-                  <Select
-                    showSearch
-                    placeholder="Select Brand"
-                    size="large"
-                    style={{ width: "100%", borderRadius: 8, height: "60px" }}
-                    value={values.brand}
-                    onChange={(value) => setFieldValue("brand", value)}
-                    filterOption={(input, option) =>
-                      option.children
-                        .toLowerCase()
-                        .includes(input.toLowerCase())
-                    }
-                    suffixIcon={<CarOutlined style={{ color: "#888" }} />}
-                  >
-                    {car_brands.map((brand) => (
-                      <Option key={brand} value={brand}>
-                        {brand}
-                      </Option>
-                    ))}
-                  </Select>
+                  {!isAddingBrand ? (
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <Select
+                        showSearch
+                        placeholder="Select or add new brand"
+                        size="large"
+                        style={{ flex: 1, borderRadius: 8, height: "60px" }}
+                        value={values.brand}
+                        onChange={(value) => setFieldValue("brand", value)}
+                        filterOption={(input, option) =>
+                          option.children
+                            .toLowerCase()
+                            .includes(input.toLowerCase())
+                        }
+                        suffixIcon={<CarOutlined style={{ color: "#888" }} />}
+                        dropdownRender={(menu) => (
+                          <div>
+                            {menu}
+                            <div
+                              style={{
+                                padding: "8px 12px",
+                                borderTop: "1px solid #f0f0f0",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => setIsAddingBrand(true)}
+                            >
+                              <PlusOutlined style={{ marginRight: 8 }} />
+                              Add new brand
+                            </div>
+                          </div>
+                        )}
+                      >
+                        {brandOptions.map((brand) => (
+                          <Option key={brand} value={brand}>
+                            {brand}
+                          </Option>
+                        ))}
+                      </Select>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <Input
+                        placeholder="Enter new brand name"
+                        value={newBrand}
+                        onChange={(e) => setNewBrand(e.target.value)}
+                        size="large"
+                        style={{ flex: 1, borderRadius: 8 }}
+                        onPressEnter={handleAddBrand}
+                        styles={{ height: "60px" }}
+                      />
+                      <Button
+                        size="large"
+                        type="primary"
+                        onClick={handleAddBrand}
+                        style={{
+                          borderRadius: 8,
+                          background: "#ff0030",
+                          border: "none",
+                          minWidth: "80px",
+                        }}
+                      >
+                        Add
+                      </Button>
+                      <Button
+                        size="large"
+                        onClick={() => {
+                          setIsAddingBrand(false);
+                          setNewBrand("");
+                        }}
+                        style={{ borderRadius: 8 }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  )}
                   {errors.brand && (
                     <p
                       className="error__feedback"
@@ -216,7 +283,7 @@ function BasicInformation() {
                     placeholder="Example: 289929"
                     value={values.price}
                     onChange={handleChange}
-                    prefix={<DollarOutlined style={{ color: "#888" }} />}
+                    // prefix={<DollarOutlined style={{ color: "#888" }} />}
                     size="large"
                     style={{ borderRadius: 8, padding: "16px" }}
                   />
@@ -276,6 +343,9 @@ function BasicInformation() {
                   border: "none",
                   padding: "10px 32px",
                   color: "#fff",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                  fontWeight: 500,
                 }}
               >
                 Next

@@ -28,7 +28,7 @@ function BackToTop() {
   return (
     <div className="back-to-top">
       {isVisible && (
-        <button onClick={scrollToTop} style={{ backgroundColor: "#1D6170" }}>
+        <button onClick={scrollToTop} style={{ backgroundColor: "#ff0030" }}>
           <FaArrowUp />
         </button>
       )}

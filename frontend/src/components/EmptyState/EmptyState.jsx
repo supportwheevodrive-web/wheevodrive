@@ -3,37 +3,38 @@ import "./EmptyState.css";
 
 function EmptyState() {
   return (
-    <div className="empty-state w-100">
-      <div className="empty-icon">
-        <img
-          src="https://cdni.iconscout.com/illustration/premium/thumb/data-not-found-illustration-download-in-svg-png-gif-file-formats--message-empty-communication-emptystate-no-pack-design-development-illustrations-9404367.png"
-          className="w-100"
-          alt="no-data available"
-          title="No data available"
-        />
-      </div>
-      <h2 className="empty-title">No cars Available</h2>
-      <p className="empty-description">
-        We couldn't find any data matching your request.
-      </p>
-      <button className="empty-action">
-        Refresh Page
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M23 12c0-6.07-4.93-11-11-11S1 5.93 1 12s4.93 11 11 11 11-4.93 11-11zM4.93 12c0-3.96 3.22-7.18 7.18-7.18"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
+    <div className="empty-state">
+      <div className="empty-icon-wrapper">
+        <div className="empty-icon">
+          <img
+            src="https://cdni.iconscout.com/illustration/premium/thumb/data-not-found-illustration-download-in-svg-png-gif-file-formats--message-empty-communication-emptystate-no-pack-design-development-illustrations-9404367.png"
+            alt="No cars available"
           />
-          <path
-            d="M12 4.93V1l4.24 4.24L12 9.41V5.7"
+        </div>
+      </div>
+      <h2 className="empty-title">No Cars Available</h2>
+      <p className="empty-description">
+        We couldn't find any vehicles matching your criteria. Try adjusting your
+        filters or check back later.
+      </p>
+      <div className="empty-actions">
+        <button className="empty-action primary">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+          >
+            <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9" />
+          </svg>
+          Refresh Listings
+        </button>
+        <button className="empty-action secondary">Browse All Cars</button>
+      </div>
     </div>
   );
 }

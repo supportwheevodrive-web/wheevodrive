@@ -55,4 +55,5 @@ export const car_conditions = [
   "Poor",
   "Needs Repair",
   "For Parts Only",
+  "Other",
 ];

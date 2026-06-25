@@ -32,6 +32,7 @@ import { BsFillGearFill } from "react-icons/bs";
 import { GiCarWheel } from "react-icons/gi";
 import { UserContext } from "../../hooks/UserContext";
 import { Box, Modal } from "@mui/material";
+import { DEFAULT_AVATAR } from "../../constants/urls";
 
 const modalStyle = {
   position: "absolute",
@@ -143,7 +144,9 @@ function DetailsScreen() {
   return (
     <div className="dc-wrap">
       <Helmet>
-        <title>{car?.title || car?.brand + " " + car?.model} - WheevoDrive</title>
+        <title>
+          {car?.title || car?.brand + " " + car?.model} - WheevoDrive
+        </title>
         <meta
           name="description"
           content={`Buy ${car?.brand} ${car?.model} in ${car?.location}. ${car?.kilometers_driven} driven, ${car?.fuel_type} car in good condition.`}
@@ -162,7 +165,10 @@ function DetailsScreen() {
         />
         <meta property="og:image" content={car?.images?.[0]} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://WheevoDrive.com/cars/${id}`} />
+        <meta
+          property="og:url"
+          content={`https://WheevoDrive.com/cars/${id}`}
+        />
         <link rel="canonical" href={`https://WheevoDrive.com/cars/${id}`} />
       </Helmet>
 
@@ -360,9 +366,10 @@ function DetailsScreen() {
 
           <div className="dc-seller-card">
             <p className="dc-seller-heading">Listed by</p>
+
             <div className="dc-seller-body">
               <img
-                src={car?.dealer_id?.profile_picture || "/default-avatar.jpg"}
+                src={car?.dealer_id?.profile_picture || DEFAULT_AVATAR}
                 alt="Dealer"
                 className="dc-seller-avatar"
               />
@@ -375,7 +382,12 @@ function DetailsScreen() {
                   {car?.dealer_id?.location || "Location not specified"}
                 </p>
                 <p className="dc-seller-since">
-                  <FaRegClock /> Member since 2020
+                  <FaRegClock />
+                  {car?.dealer_id?.createdAt
+                    ? `Member since ${new Date(
+                        car?.dealer_id?.createdAt
+                      ).getFullYear()} `
+                    : "Unavailable"}
                 </p>
               </div>
               <button

@@ -71,6 +71,7 @@ module.exports.getCars = async (req, res) => {
         ),
       };
     }
+    filter.status = "Available";
 
     const cars = await Cars.find(filter)
       .sort({ [sortBy]: order === "desc" ? -1 : 1 })

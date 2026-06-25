@@ -88,12 +88,12 @@
 
 .react-tabs__tab--selected {
   color: #101c3a;
-  border-bottom: 3px solid #606cbc;
+  border-bottom: 3px solid var(--primary);
   font-size: 20px;
 }
 
 .react-tabs__tab:hover {
-  color: #606cbc;
+  color: var(--primary);
 }
 
 .react-tabs__tab-panel {

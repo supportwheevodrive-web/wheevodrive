@@ -22,7 +22,25 @@ function Card({ car, editable = false, category }) {
   const isFavourite = favCars.includes(car?._id);
 
   const handleNavigateToCar = async () => {
-    window.location.href = `/car/${car._id}`;
+    const queryParams = new URLSearchParams({
+      name: car?.car_name || "",
+      brand: car?.brand || "",
+      model: car?.model || "",
+      year: car?.year || "",
+      price: car?.price || "",
+      mileage: car?.mileage || "",
+      fuel_type: car?.fuel_type || "",
+      transmission: car?.transmission || "",
+      body_type: car?.body_type || "",
+      condition: car?.condition || "",
+      place: car?.place || "",
+      seats: car?.seats || "",
+      engine_size: car?.engine_size || "",
+      status: car?.status || "",
+      views: car?.views || "",
+    }).toString();
+
+    window.location.href = `/car/${car._id}?${queryParams}`;
     await axios.post(`${ADD_CAR_VIEWS_COUNT}/${car._id}`);
   };
 

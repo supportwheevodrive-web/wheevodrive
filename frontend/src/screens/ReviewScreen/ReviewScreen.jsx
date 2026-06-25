@@ -35,7 +35,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: "95%",
   maxWidth: 500,
-  bgcolor: "#1a1a1a",
+  bgcolor: "#fff",
   borderRadius: "24px",
   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
   p: 4,
@@ -43,7 +43,7 @@ const style = {
 };
 
 const ReviewScreen = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
@@ -56,7 +56,13 @@ const ReviewScreen = () => {
   const [currentReview, setCurrentReview] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [avg, setAvg] = useState(0);
-  const [statCounts, setStatsCount] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
+  const [statCounts, setStatsCount] = useState({
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  });
   const [likedReviews, setLikedReviews] = useState({});
 
   useEffect(() => {
@@ -93,12 +99,18 @@ const ReviewScreen = () => {
 
   const getSentimentIcon = (rating) => {
     switch (rating) {
-      case 5: return <SentimentVerySatisfied className="s-ico exc" />;
-      case 4: return <SentimentSatisfied className="s-ico goo" />;
-      case 3: return <SentimentNeutral className="s-ico ave" />;
-      case 2: return <SentimentDissatisfied className="s-ico poo" />;
-      case 1: return <SentimentVeryDissatisfied className="s-ico bad" />;
-      default: return <SentimentNeutral className="s-ico" />;
+      case 5:
+        return <SentimentVerySatisfied className="s-ico exc" />;
+      case 4:
+        return <SentimentSatisfied className="s-ico goo" />;
+      case 3:
+        return <SentimentNeutral className="s-ico ave" />;
+      case 2:
+        return <SentimentDissatisfied className="s-ico poo" />;
+      case 1:
+        return <SentimentVeryDissatisfied className="s-ico bad" />;
+      default:
+        return <SentimentNeutral className="s-ico" />;
     }
   };
 
@@ -116,8 +128,6 @@ const ReviewScreen = () => {
             text: "Your review is live.",
             icon: "success",
             confirmButtonColor: "#ff0030",
-            background: "#1a1a1a",
-            color: "#fff"
           });
           setRating(0);
           setReviewText("");
@@ -168,9 +178,14 @@ const ReviewScreen = () => {
               <div key={val} className="rs-progress-item">
                 <span className="rs-label">{val} ★</span>
                 <div className="rs-bar-bg">
-                  <div className="rs-bar-fill" style={{ width: `${getRatingPercentage(val)}%` }}></div>
+                  <div
+                    className="rs-bar-fill"
+                    style={{ width: `${getRatingPercentage(val)}%` }}
+                  ></div>
                 </div>
-                <span className="rs-pct">{Math.round(getRatingPercentage(val))}%</span>
+                <span className="rs-pct">
+                  {Math.round(getRatingPercentage(val))}%
+                </span>
               </div>
             ))}
           </div>
@@ -179,9 +194,18 @@ const ReviewScreen = () => {
 
       <div className="rs-controls rs-container">
         <div className="rs-tabs">
-          <button className={`rs-tab ${activeTab === "all" ? "active" : ""}`} onClick={() => setActiveTab("all")}>All</button>
+          <button
+            className={`rs-tab ${activeTab === "all" ? "active" : ""}`}
+            onClick={() => setActiveTab("all")}
+          >
+            All
+          </button>
           {[5, 4, 3, 2, 1].map((v) => (
-            <button key={v} className={`rs-tab ${activeTab === v.toString() ? "active" : ""}`} onClick={() => setActiveTab(v.toString())}>
+            <button
+              key={v}
+              className={`rs-tab ${activeTab === v.toString() ? "active" : ""}`}
+              onClick={() => setActiveTab(v.toString())}
+            >
               {v} ★
             </button>
           ))}
@@ -207,10 +231,17 @@ const ReviewScreen = () => {
               </div>
               <p className="rs-review-body">{item.reviewText}</p>
               <div className="rs-card-foot">
-                <button className={`rs-action ${likedReviews[item._id] ? "active" : ""}`} onClick={() => handleLike(item._id)}>
+                <button
+                  className={`rs-action ${
+                    likedReviews[item._id] ? "active" : ""
+                  }`}
+                  onClick={() => handleLike(item._id)}
+                >
                   <ThumbUp /> {likedReviews[item._id] ? "Liked" : "Helpful"}
                 </button>
-                <button className="rs-action"><Share /> Share</button>
+                <button className="rs-action">
+                  <Share /> Share
+                </button>
               </div>
             </div>
           ))
@@ -221,11 +252,27 @@ const ReviewScreen = () => {
 
       {totalPages > 1 && (
         <div className="rs-pagination rs-container">
-          <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}><ChevronLeft /></button>
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft />
+          </button>
           {[...Array(totalPages)].map((_, i) => (
-            <button key={i} className={currentPage === i + 1 ? "active" : ""} onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
+            <button
+              key={i}
+              className={currentPage === i + 1 ? "active" : ""}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
           ))}
-          <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}><ChevronRight /></button>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight />
+          </button>
         </div>
       )}
 
@@ -233,28 +280,49 @@ const ReviewScreen = () => {
         <Box sx={style}>
           <div className="rs-modal-content">
             <div className="rs-modal-header">
-              <h3>Share Experience</h3>
-              <IconButton onClick={handleClose} sx={{ color: "#fff" }}><CloseIcon /></IconButton>
+              <h3 style={{ color: "#111" }}>Share Experience</h3>
+              <IconButton onClick={handleClose} sx={{ color: "#fff" }}>
+                <CloseIcon />
+              </IconButton>
             </div>
             {!user ? (
               <div className="rs-auth-msg">
                 <p>Please sign in to write a review.</p>
-                <button className="rs-btn-primary" onClick={() => navigate("/signin")}>Sign In</button>
+                <button
+                  className="rs-btn-primary"
+                  onClick={() => navigate("/signin")}
+                >
+                  Sign In
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="rs-form">
-                <Rating value={rating} onChange={(e, n) => setRating(n)} size="large" sx={{ color: "#ff0030", mb: 3 }} />
-                <TextField 
-                    fullWidth multiline rows={4} 
-                    placeholder="Your thoughts..." 
-                    value={reviewText} 
-                    onChange={(e) => setReviewText(e.target.value)}
-                    sx={{ 
-                      "& .MuiOutlinedInput-root": { color: "#fff", bgcolor: "#222" },
-                      mb: 3 
-                    }}
+                <Rating
+                  value={rating}
+                  onChange={(e, n) => setRating(n)}
+                  size="large"
+                  sx={{ color: "gold", mb: 3 }}
                 />
-                <button type="submit" className="rs-btn-primary" disabled={!rating || !reviewText || loading}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={4}
+                  placeholder="Your thoughts..."
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      color: "#111",
+                      bgcolor: "#fff",
+                    },
+                    mb: 3,
+                  }}
+                />
+                <button
+                  type="submit"
+                  className="rs-btn-primary"
+                  disabled={!rating || !reviewText || loading}
+                >
                   {loading ? "Submitting..." : "Post Review"}
                 </button>
               </form>

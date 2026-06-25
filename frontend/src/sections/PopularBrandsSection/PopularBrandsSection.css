@@ -140,7 +140,7 @@
   }
   
   .explore-btn:hover {
-    background: #606cbc;
+    background: var(--primary);
     color: #111;
     transform: translateY(-2px);
   }
@@ -151,7 +151,7 @@
   }
   
   .cta-button {
-    background: #606cbc;
+    background: var(--primary);
     color: white;
     border: none;
     border-radius: 8px;

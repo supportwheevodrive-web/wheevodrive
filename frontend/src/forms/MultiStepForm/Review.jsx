@@ -77,9 +77,9 @@ function Review() {
   };
 
   return (
-    <div className="details__wrapper">
+    <div className="details__wrapper" style={{ marginBottom: "40px" }}>
       <AnimatePresence>
-        {loading && <Overlay isOpen={loading}>Overlay Content</Overlay>}
+        {loading && <Overlay isOpen={loading}></Overlay>}
       </AnimatePresence>
       <h2>Review Your Details</h2>
       <Row gutter={[16, 16]}>
@@ -164,7 +164,7 @@ function Review() {
           type="submit"
           onClick={handleSubmit}
           disabled={loading}
-          className="w-25"
+          // className="w-100"
           style={{
             borderRadius: 8,
             background: "#ff0030",

@@ -69,7 +69,7 @@ function AdditionalInformation() {
       }}
     >
       {({ handleSubmit }) => (
-        <Form className="details__wrapper">
+        <Form className="details__wrapper" style={{ marginBottom: "40px" }}>
           <div className="form__item">
             <label>Description</label>
             <Field name="description" as={Input} style={{ padding: "15px" }} />

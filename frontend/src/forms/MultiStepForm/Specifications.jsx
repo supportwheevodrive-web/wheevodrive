@@ -77,11 +77,13 @@ function Specifications() {
                     value={values.fuel_type}
                     onChange={(value) => setFieldValue("fuel_type", value)}
                   >
-                    {["Petrol", "Diesel", "Hybrid", "Electric"].map((fuel) => (
-                      <Option key={fuel} value={fuel}>
-                        {fuel}
-                      </Option>
-                    ))}
+                    {["Petrol", "Diesel", "Hybrid", "Electric", "Other"].map(
+                      (fuel) => (
+                        <Option key={fuel} value={fuel}>
+                          {fuel}
+                        </Option>
+                      )
+                    )}
                   </Select>
                   {errors.fuel_type && (
                     <p
@@ -110,7 +112,7 @@ function Specifications() {
                     value={values.transmission}
                     onChange={(value) => setFieldValue("transmission", value)}
                   >
-                    {["Automatic", "Manual"].map((trans) => (
+                    {["Automatic", "Manual", "Other"].map((trans) => (
                       <Option key={trans} value={trans}>
                         {trans}
                       </Option>
@@ -143,7 +145,7 @@ function Specifications() {
                     value={values.body_type}
                     onChange={(value) => setFieldValue("body_type", value)}
                   >
-                    {["Sedan", "SUV", "Hatchback"].map((body) => (
+                    {["Sedan", "SUV", "Hatchback", "Other"].map((body) => (
                       <Option key={body} value={body}>
                         {body}
                       </Option>

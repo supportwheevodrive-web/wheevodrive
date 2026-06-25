@@ -6,6 +6,8 @@ const dbUrl =
     ? process.env.DATABASE_URL_PRODUCTION
     : process.env.DATABASE_URL_DEV;
 
+console.log("dbUrl-----------", dbUrl);
+
 mongoose.set("strictQuery", true);
 
 module.exports.connect = async () => {
