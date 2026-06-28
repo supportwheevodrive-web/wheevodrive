@@ -50,8 +50,8 @@ function Banner2() {
           </div>
 
           <h1 className="main-headline">
-            Certified Cars <br />
-            <span>Happy Journeys</span>
+            Trusted <br />
+            <span>Used Car Marketplace.</span>
           </h1>
 
           <p className="sub-headline">

@@ -25,6 +25,7 @@ module.exports.addCar = async (req, res) => {
     let response = await Cars.create(carData);
     res.send(response);
   } catch (error) {
+    console.log("ERROR==============", error);
     res.status(500).send({ error: "Error uploading images" });
   }
 };

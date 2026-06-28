@@ -1,84 +1,54 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const userRouter = require("./routes/users/userRouter");
+const cluster = require("cluster");
+const os = require("os");
+const app = require("./app");
 const db = require("../config/db");
-const { rateLimiter } = require("../middlewares/rateLimiter");
-const rateLimit = require("express-rate-limit");
-// const app = express();
-
-const { app, server } = require("../libs/socket");
 const { Crons } = require("./crons/tasks");
 
 const port = process.env.PORT || 5000;
 
-// Database connection
-db.connect();
+const startServer = () => {
+  const server = app.listen(port, () => {
+    console.log(`Worker ${process.pid} started on port ${port}`);
+  });
 
-// Cron Jobs
-Crons();
+  process.on("uncaughtException", (err) => {
+    console.error("Uncaught Exception:", err);
+    server.close(() => process.exit(1));
+  });
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 1000, // Limit each IP to 100 requests
-  message: "Too many requests from this IP, please try again after 15 minutes",
-});
+  process.on("unhandledRejection", (err) => {
+    console.error("Unhandled Rejection:", err);
+    server.close(() => process.exit(1));
+  });
 
-// var corsOptions = {
-//   origin:
-//     process.env.NODE_ENV == "production"
-//       ? process.env.WEBSITE_LIVE_URL
-//       : process.env.WEBSITE_LOCAL_URL,
-
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   preflightContinue: false,
-//   optionsSuccessStatus: 204,
-//   credentials: true,
-// };
-
-var corsOptions = {
-  origin:
-    process.env.NODE_ENV === "development"
-      ? "https://carauras-dev.netlify.app"
-      : process.env.NODE_ENV === "production"
-      ? "https://carauras.com"
-      : "http://localhost:3000",
-
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  credentials: true,
+  return server;
 };
 
-// Middlewares
-dotenv.config();
-app.use(cors(corsOptions));
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(limiter);
-app.use(rateLimiter);
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+  console.log(`Starting ${os.cpus().length} workers...`);
 
-// Routes configurations
-app.use("/api/v1/user", userRouter);
+  db.connect();
+  Crons();
 
-app.get("/", (req, res) => {
-  res.send("Nodejs server is running....");
-});
+  for (let i = 0; i < os.cpus().length; i++) {
+    cluster.fork();
+  }
 
-// Handle uncaught exceptions
-process.on("uncaughtException", (err) => {
-  console.error("Uncaught Exception:", err);
-  process.exit(1);
-});
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    cluster.fork();
+  });
 
-// Handle unhandled promise rejections
-process.on("unhandledRejection", (err) => {
-  console.error("Unhandled Rejection:", err);
-  process.exit(1);
-});
-
-server.listen(port, () => {
-  console.log(`Server is running at the port ${port}`);
-});
+  process.on("SIGINT", () => {
+    console.log("Master shutting down...");
+    for (const id in cluster.workers) {
+      cluster.workers[id].kill();
+    }
+    process.exit(0);
+  });
+} else {
+  db.connect();
+  Crons();
+  startServer();
+}

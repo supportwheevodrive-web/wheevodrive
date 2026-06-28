@@ -107,7 +107,7 @@ function DetailsScreen() {
     const fetchSimilarCars = async () => {
       if (car) {
         const similar_cars = await axios.get(
-          `${GET_ALL_CARS}?brand=${car?.brand}&dealer_id=${car?.dealer_id?._id}`
+          `${GET_ALL_CARS}?brand=${car?.brand}`
         );
         if (similar_cars) setSimilarCars(similar_cars.data.data);
       }
