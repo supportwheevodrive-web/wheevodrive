@@ -6,13 +6,14 @@ const userRouter = require("./routes/users/userRouter");
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://wheevodrivedev.netlify.app",
+  "http://wheevodrive.com",
+];
+
 const corsOptions = {
-  origin:
-    process.env.NODE_ENV === "development"
-      ? "https://carauras-dev.netlify.app"
-      : process.env.NODE_ENV === "production"
-      ? "https://carauras.com"
-      : "http://localhost:3000",
+  origin: allowedOrigins,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
