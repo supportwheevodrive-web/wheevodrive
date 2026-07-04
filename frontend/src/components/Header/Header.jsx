@@ -527,7 +527,7 @@ function Header() {
           </div>
         )}
       </div>
-      {isMenuOpen && <div className="overlay" onClick={toggleMenu}></div>}
+      {isMenuOpen && <div className="overlay-new" onClick={toggleMenu}></div>}
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
