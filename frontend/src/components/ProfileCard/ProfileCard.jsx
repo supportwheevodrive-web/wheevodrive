@@ -110,6 +110,23 @@ const VerifiedBadge = styled(Box)(({ theme }) => ({
   boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
 }));
 
+const PlanBadge = styled(Chip)(({ theme }) => ({
+  position: "absolute",
+  bottom: -8,
+  left: "50%",
+  transform: "translateX(-50%)",
+  backgroundColor: "#ff0030",
+  color: "#ffffff",
+  fontWeight: 600,
+  fontSize: "0.7rem",
+  height: 22,
+  padding: "0 8px",
+  borderRadius: 12,
+  "& .MuiChip-label": {
+    padding: "0 8px",
+  },
+}));
+
 const ProfileContent = styled(Box)(({ theme }) => ({
   padding: "24px",
   background: "#ffffff",
@@ -273,6 +290,7 @@ function ProfileCard({ user, editable = false, onEdit, onShare }) {
       setIsSharing(false);
     }
   };
+  console.log("USER----------------", user);
 
   const getInitials = () => {
     if (!user) return "";
@@ -283,6 +301,22 @@ function ProfileCard({ user, editable = false, onEdit, onShare }) {
 
   const handleImageError = () => {
     setImageError(true);
+  };
+
+  const shouldShowVerifiedBadge = () => {
+    if (!user) return false;
+    return (
+      user.subscribed === true ||
+      user.subscription_plan === "Pro" ||
+      user.subscription_plan === "Elit"
+    );
+  };
+
+  const getPlanDisplayName = () => {
+    if (!user) return "";
+    if (user.subscription_plan === "Pro") return "Pro";
+    if (user.subscription_plan === "Elit") return "Elit";
+    return "";
   };
 
   if (!user) {
@@ -312,10 +346,14 @@ function ProfileCard({ user, editable = false, onEdit, onShare }) {
             <InitialsAvatar>{getInitials()}</InitialsAvatar>
           )}
 
-          {user?.subscribed && (
+          {shouldShowVerifiedBadge() && (
             <VerifiedBadge>
-              <VerifiedIcon sx={{ color: "#ff0030", fontSize: 20 }} />
+              <VerifiedIcon sx={{ color: "#09B50F", fontSize: 20 }} />
             </VerifiedBadge>
+          )}
+
+          {shouldShowVerifiedBadge() && getPlanDisplayName() && (
+            <PlanBadge label={getPlanDisplayName()} size="small" />
           )}
         </AvatarWrapper>
       </ProfileHeader>

@@ -1,31 +1,55 @@
 const { cloudinary } = require("../../../config/cloudinary");
 const Cars = require("../../../models/users/carSchema");
-const { v4: uuidv4 } = require("uuid");
+const { SUBRIPTION_PLANS } = require("../../constants/constants");
 
 module.exports.addCar = async (req, res) => {
   try {
-    let carData = req.body;
+    const carData = {
+      ...req.body,
+      dealer_id: req.user._id,
+      place: req.body.place,
+    };
 
-    carData.dealer_id = req.user._id;
-    let additionalImageUrls = [];
+    const dealer = req.user;
 
-    carData.place = req.body.place;
-    const additionalImages = req.body.images;
+    const dealerCarCount = await Cars.countDocuments({
+      dealer_id: dealer._id,
+    });
 
-    for (let image of additionalImages) {
-      const additionalImageResponse = await cloudinary.uploader.upload(image, {
-        upload_preset: "cloudinary_react",
-        public_id: `${Date.now()}_additional`,
+    if (!dealer?.subscribed) {
+      if (dealerCarCount >= 5) {
+        return res
+          .status(403)
+          .send({ message: "Please take a subscription to add more cars." });
+      }
+    } else if (
+      dealer.subscription_plan === SUBRIPTION_PLANS.PRO.TITLE &&
+      dealerCarCount >= 20
+    ) {
+      return res.status(403).send({
+        message: "Please upgrade your plan to add more cars.",
       });
-      additionalImageUrls.push(additionalImageResponse.url);
     }
 
-    carData.images = additionalImageUrls;
+    const images = req.body.images || [];
 
-    let response = await Cars.create(carData);
-    res.send(response);
+    carData.images = await Promise.all(
+      images.map(async (image, index) => {
+        const response = await cloudinary.uploader.upload(image, {
+          upload_preset: "cloudinary_react",
+          public_id: `${Date.now()}_${index}`,
+        });
+
+        return response.secure_url;
+      })
+    );
+
+    const response = await Cars.create(carData);
+
+    return res.status(201).send(response);
   } catch (error) {
-    console.log("ERROR==============", error);
-    res.status(500).send({ error: "Error uploading images" });
+    return res.status(500).send({
+      error: error.message || "Error uploading images",
+    });
   }
 };

@@ -12,22 +12,52 @@ function FAQSection() {
     {
       question: "How do I create an account?",
       answer:
-        "You can create an account by clicking the 'Sign Up' button on the homepage and filling out the required details.",
+        "You can create an account by clicking the 'Sign Up' button on the homepage. Fill in your name, email, phone number, and create a password. Once registered, you'll receive a verification email to activate your account.",
     },
     {
       question: "How can I post my car for sale?",
       answer:
-        "Once logged in, go to your profile, and click on post a car, provide the details of your car, and submit the form.",
+        "After creating an account and getting onboarded as a dealer, log in to your profile and click on 'Add Car' or 'Post Listing'. Fill in all required details including car make, model, year, price, condition, and upload clear photos. Submit the form and your listing will go live instantly.",
     },
     {
       question: "What fees does WheevoDrive charge?",
       answer:
-        "Posting a car is free, but we charge a small fee for premium features like highlighting your listing.",
+        "Browsing cars and contacting dealers is completely free. We offer premium subscription plans for dealers: Pro Plan at ₹99/month allows up to 20 listings with featured profile badge, and Elite Plan at ₹499/month offers unlimited listings with premium features. Free users can browse all cars without any charges.",
     },
     {
-      question: "How do I contact potential buyers?",
+      question: "How do I contact potential buyers or dealers?",
       answer:
-        "Buyers will contact you via the details you provide in your listing or through our secure messaging system.",
+        "Buyers can contact dealers directly through the car details page using the 'Call Now' button or 'WhatsApp' button. Dealers will receive notifications and can respond to inquiries through their dashboard. All contact details are visible to facilitate direct communication.",
+    },
+    {
+      question: "How long does it take to get onboarded as a dealer?",
+      answer:
+        "After you submit your dealer application with required documents, our admin team typically reviews and verifies your profile within 24-48 hours. Once verified, you'll receive an email confirmation and can start listing your cars immediately.",
+    },
+    {
+      question: "What documents do I need to become a verified dealer?",
+      answer:
+        "To become a verified dealer, you need to submit your business registration certificate, GST registration (if applicable), address proof, and a valid government ID (PAN Card, Aadhar Card, or Driving License). These documents ensure trust and transparency on our platform.",
+    },
+    {
+      question: "Can I edit or delete my car listing after posting?",
+      answer:
+        "Yes, you can edit or delete your car listings anytime from your dealer dashboard. Simply go to 'My Listings', select the car you want to modify, and click on 'Edit' or 'Delete' option. Changes will be reflected immediately on the platform.",
+    },
+    {
+      question: "How do I upgrade my subscription plan?",
+      answer:
+        "Go to your profile settings or the 'Plans' section, choose the plan you want to upgrade to (Pro or Elite), and follow the payment process. We accept all major payment methods through our secure Razorpay integration. The upgrade will be activated immediately upon successful payment.",
+    },
+    {
+      question: "Is my personal information safe on WheevoDrive?",
+      answer:
+        "Absolutely! We take your privacy and security seriously. We use industry-standard encryption and security measures to protect your data. Your personal information is only shared with dealers when you initiate contact through our platform, and we never share your data with third parties.",
+    },
+    {
+      question: "Can I use WheevoDrive on mobile?",
+      answer:
+        "Yes! WheevoDrive is fully responsive and works seamlessly on all devices including smartphones, tablets, and desktops. You can browse cars, contact dealers, and manage your listings on the go using your mobile browser.",
     },
   ];
 
@@ -70,6 +100,7 @@ function FAQSection() {
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
+                    viewBox="0 0 24 24"
                   >
                     <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z" />
                   </svg>

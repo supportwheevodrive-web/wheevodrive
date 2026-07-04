@@ -1,28 +1,121 @@
-import React, { useContext } from "react";
-import {
-  FaCrown,
-  FaStar,
-  FaRocket,
-  FaChartLine,
-  FaTags,
-  FaPhone,
-  FaShieldAlt,
-} from "react-icons/fa";
+import React, { useContext, useState } from "react";
+import { FaCrown, FaStar, FaRocket, FaShieldAlt } from "react-icons/fa";
 import "./PremiumPlans.css";
-import axios from "axios";
-import { UPDATE_PROFILE_URL } from "../../config/api";
+import { BACKEND_URL } from "../../config/api";
 import { UserContext } from "../../hooks/UserContext";
 import { SUBRIPTION_PLANS } from "../../constants/userConstants";
+import { useRazorpay } from "react-razorpay";
 import Swal from "sweetalert2";
 
 const PremiumPlans = () => {
-  const handleSubscribePan = async (plan) => {
-    window.location.href = `/subscribe/${plan}`;
+  const { error, isLoading: isRzrLoading, Razorpay } = useRazorpay();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const verifyPaymentOnBackend = async (paymentData) => {
+    // POST paymentData to backend for verification
+    try {
+      const response = await fetch(
+        `${BACKEND_URL}/api/v1/user/verify-payment`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(paymentData),
+        }
+      );
+      const result = await response.json();
+      if (result.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Payment Successful!",
+          text: "Your subscription has been activated.",
+        });
+      }
+    } catch (error) {
+      console.error("Payment verification failed:", error);
+    }
   };
+
+  const handleSubscribePan = async (plan) => {
+    let amount = 0;
+    if (plan === SUBRIPTION_PLANS.PRO.TITLE) {
+      amount = SUBRIPTION_PLANS.PRO.amount;
+    } else if (plan === SUBRIPTION_PLANS.ELITE.TITLE) {
+      amount = SUBRIPTION_PLANS.ELITE.amount;
+    } else {
+      amount = 0;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${BACKEND_URL}/api/v1/user/create-subscription`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount,
+            receipt: "order_rcpt_01",
+          }),
+        }
+      );
+      const order = await response.json();
+
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency,
+        name: "WheevoDrive",
+        description: "Subscription Payment",
+        order_id: order.id,
+        handler: function (response) {
+          verifyPaymentOnBackend(response);
+        },
+        prefill: {
+          name: "John Doe",
+          email: "john@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+        modal: {
+          ondismiss: function () {
+            setIsLoading(false);
+          },
+        },
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        Swal.fire({
+          icon: "error",
+          title: "Payment Failed",
+          text: response.error.description,
+        });
+        setIsLoading(false);
+      });
+      rzp.open();
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Payment failed:", error);
+      setIsLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong. Please try again.",
+      });
+    }
+  };
+
   const { user } = useContext(UserContext);
 
   return (
     <div className="premium-plans-container mt-2">
+      {isLoading && (
+        <div className="overlay">
+          <div className="loader"></div>
+        </div>
+      )}
       <div className="premium-plans-header">
         <h2>Upgrade Your Experience</h2>
         <p>
@@ -51,7 +144,7 @@ const PremiumPlans = () => {
               <span>✓</span> Basic dealer profile
             </li>
             <li>
-              <span>✓</span> Basic inquiry notifications
+              <span>✓</span> Basic performance analytics
             </li>
           </ul>
           <button className="plan-button free-button">Current Plan</button>
@@ -66,24 +159,21 @@ const PremiumPlans = () => {
             <span className="popular-badge">POPULAR</span>
           </div>
           <div className="plan-price">
-            <p className="price">₹499–₹799</p>
+            <p className="price">₹99</p>
             <p className="price-subtext">Per month</p>
           </div>
           <ul className="plan-features">
             <li>
-              <span>✓</span> Up to 25–50 listings
+              <span>✓</span> Up to 20 listings
             </li>
             <li>
               <span>✓</span> Featured profile badge
             </li>
             <li>
-              <span>✓</span> WhatsApp contact button
-            </li>
-            <li>
               <span>✓</span> Basic performance analytics
             </li>
             <li>
-              <span>✓</span> Boost 2 listings/month
+              <span>✓</span> Top listings
             </li>
           </ul>
           <button
@@ -102,7 +192,7 @@ const PremiumPlans = () => {
             <h3>Elite Plan</h3>
           </div>
           <div className="plan-price">
-            <p className="price">₹1,499–₹2,499</p>
+            <p className="price">₹499</p>
             <p className="price-subtext">Per month</p>
           </div>
           <ul className="plan-features">
@@ -110,16 +200,16 @@ const PremiumPlans = () => {
               <span>✓</span> Unlimited listings
             </li>
             <li>
-              <span>✓</span> Priority placement
+              <span>✓</span> Featured profile badge
             </li>
             <li>
-              <span>✓</span> Custom dealer landing page
+              <span>✓</span> WhatsApp contact button
             </li>
             <li>
-              <span>✓</span> Advanced analytics
+              <span>✓</span> Basic performance analytics
             </li>
             <li>
-              <span>✓</span> Boost up to 10 listings/month
+              <span>✓</span> Top listings
             </li>
           </ul>
           <button

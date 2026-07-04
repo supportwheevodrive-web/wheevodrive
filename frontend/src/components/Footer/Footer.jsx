@@ -53,7 +53,7 @@ function Footer() {
         { name: "Home", path: "/" },
         { name: "Inventory", path: "/used-cars" },
         { name: "Services", path: "/services" },
-        { name: "Blog", path: "/blogs" },
+        { name: "Blogs", path: "/blogs" },
       ],
     },
     {
@@ -62,7 +62,8 @@ function Footer() {
         { name: "About Us", path: "/about-us" },
         { name: "Contact Us", path: "/contact-us" },
         { name: "FAQs", path: "/faqs" },
-        { name: "Privacy Policy", path: "/privacy" },
+        { name: "Privacy Policy", path: "/privacy-policy" },
+        { name: "Terms and Conditions", path: "/terms-and-conditions" },
       ],
     },
   ];
@@ -73,7 +74,7 @@ function Footer() {
         <div className="footer-brand-info">
           <div className="footer-logo">
             <h2>
-              Car<span>Auras</span>
+              Wheevo<span>Drive</span>
             </h2>
           </div>
           <p className="brand-pitch">
@@ -81,11 +82,11 @@ function Footer() {
             trust, and performance in every drive.
           </p>
           <div className="footer-contact-details">
+            {/* <div className="c-item">
+              <Phone /> <span>+91 9526374812</span>
+            </div> */}
             <div className="c-item">
-              <Phone /> <span>+91 90000 00000</span>
-            </div>
-            <div className="c-item">
-              <Email /> <span>info@WheevoDrive.com</span>
+              <Email /> <span>support.wheevodrive@gmail.com</span>
             </div>
             <div className="c-item">
               <LocationOn /> <span>Kochi, Kerala, India</span>
@@ -109,16 +110,25 @@ function Footer() {
         <div className="footer-social-col">
           <h4>Follow Us</h4>
           <div className="social-pill-group">
-            <a href="https://facebook.com" className="social-pill">
+            <a
+              href="https://www.facebook.com/profile.php?id=61591774130072"
+              className="social-pill"
+            >
               <FacebookIcon />
             </a>
-            <a href="https://instagram.com" className="social-pill">
+            <a
+              href="https://www.instagram.com/wheevodrive"
+              className="social-pill"
+            >
               <InstagramIcon />
             </a>
-            <a href="https://x.com" className="social-pill">
+            <a href="https://x.com/WheevoDrive" className="social-pill">
               <XIcon />
             </a>
-            <a href="https://youtube.com" className="social-pill">
+            <a
+              href="https://www.youtube.com/@WheevoDrive"
+              className="social-pill"
+            >
               <YouTubeIcon />
             </a>
           </div>
@@ -128,7 +138,8 @@ function Footer() {
       <div className="footer-bottom-bar">
         <div className="bottom-bar-inner">
           <p>
-            © {new Date().getFullYear()} WheevoDrive. High Performance Marketplace.
+            © {new Date().getFullYear()} WheevoDrive. High Performance
+            Marketplace.
           </p>
           <button className="scroll-top-btn" onClick={scrollToTop}>
             <ArrowUpward />

@@ -18,7 +18,7 @@ module.exports.connect = async () => {
       minPoolSize: 50,
       maxIdleTimeMS: 60000,
       connectTimeoutMS: 10000, // Increased from 5000
-      socketTimeoutMS: 45000, // Increased from 30000
+
       serverSelectionTimeoutMS: 10000, // Increased from 5000
       heartbeatFrequencyMS: 10000,
       retryWrites: true,

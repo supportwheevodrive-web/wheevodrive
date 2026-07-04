@@ -76,7 +76,10 @@ function CarCategoriesSection() {
               <div className="car-info-area">
                 <h3>{cat.title}</h3>
                 <p>{cat.description}</p>
-                <button className="car-explore-btn">
+                <button
+                  className="car-explore-btn"
+                  onClick={() => (window.location.href = "/used-cars")}
+                >
                   Explore <ArrowForwardIcon sx={{ fontSize: 18 }} />
                 </button>
               </div>
@@ -85,7 +88,10 @@ function CarCategoriesSection() {
         </div>
 
         <div className="category-action-footer">
-          <button className="view-all-categories">
+          <button
+            className="view-all-categories"
+            onClick={() => (window.location.href = "/used-cars")}
+          >
             View All Segments <ArrowForwardIcon />
           </button>
         </div>

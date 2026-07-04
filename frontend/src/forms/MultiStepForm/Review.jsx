@@ -30,48 +30,84 @@ function Review() {
   } = useContext(MultiStepFormContext);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const body = {
-      ...basicDetails,
-      ...specificationDetails,
-      ...additionalInformations,
-    };
-    let res = null;
-    const token = localStorage.getItem("token");
-    if (id && token) {
-      // Edit car
-      res = await axios.patch(`${ADD_CAR_URL}/${id}`, body, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    } else {
-      res = await axios.post(ADD_CAR_URL, body, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
+    try {
+      e.preventDefault();
+      setLoading(true);
 
-    setLoading(false);
-    if (res && res.status == 200) {
+      const body = {
+        ...basicDetails,
+        ...specificationDetails,
+        ...additionalInformations,
+      };
+
+      let res = null;
+      const token = localStorage.getItem("token");
+
+      if (id && token) {
+        res = await axios.patch(`${ADD_CAR_URL}/${id}`, body, {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } else {
+        res = await axios.post(ADD_CAR_URL, body, {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+
+      setLoading(false);
+
+      if (res && (res.status === 200 || res.status === 201)) {
+        Swal.fire({
+          title: "Successfully added your car!",
+          text: "Do you want to add another car ?",
+          icon: "success",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/car/add";
+          } else {
+            window.location.href = "/profile";
+          }
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+
+      if (error.response?.status === 403) {
+        Swal.fire({
+          title: "Subscription Required",
+          text:
+            error.response?.data?.message ||
+            "Please upgrade your subscription to continue.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Go to Dashboard",
+          cancelButtonText: "View Subscriptions",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#ff0030",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/profile";
+          } else {
+            window.location.href = "/premium-plans";
+          }
+        });
+
+        return;
+      }
+
       Swal.fire({
-        title: "Successfully added your car!",
-        text: "Do you want to add another car ?",
-        icon: "success",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/car/add";
-        } else {
-          window.location.href = "/profile";
-        }
+        title: "Error",
+        text: error.response?.data?.message || "Something went wrong.",
+        icon: "error",
       });
     }
   };

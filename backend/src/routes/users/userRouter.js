@@ -45,6 +45,9 @@ const { createPaymentIntent } = require("../../controllers/users/payment");
 const {
   updatePlanConfirmation,
 } = require("../../controllers/users/updatePlanConfirmation");
+const {
+  createSubscription,
+} = require("../../controllers/users/createSubscription");
 
 const router = express.Router();
 
@@ -114,5 +117,8 @@ router.get("/dashboard/:id/graph", getDashboardGraphStats);
 router.post("/create-payment-intent", createPaymentIntent);
 
 router.post("/plan-confirmation/:id", updatePlanConfirmation);
+
+// Payment integration
+router.post("/create-subscription", createSubscription);
 
 module.exports = router;

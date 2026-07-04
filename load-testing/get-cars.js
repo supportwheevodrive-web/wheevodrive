@@ -101,27 +101,27 @@ import { check, sleep } from "k6";
 // };
 
 // With 25k
-export const options = {
-  stages: [
-    { duration: "30s", target: 1000 },
-    { duration: "1m", target: 5000 },
-    { duration: "1m", target: 10000 },
-    { duration: "2m", target: 15000 },
-    { duration: "2m", target: 20000 },
-    { duration: "2m", target: 25000 },
-    { duration: "1m", target: 25000 },
-    { duration: "30s", target: 0 },
-  ],
+// export const options = {
+//   stages: [
+//     { duration: "30s", target: 1000 },
+//     { duration: "1m", target: 5000 },
+//     { duration: "1m", target: 10000 },
+//     { duration: "2m", target: 15000 },
+//     { duration: "2m", target: 20000 },
+//     { duration: "2m", target: 25000 },
+//     { duration: "1m", target: 25000 },
+//     { duration: "30s", target: 0 },
+//   ],
 
-  thresholds: {
-    http_req_failed: ["rate<0.01"],
-    http_req_duration: ["p(95)<1000"],
-  },
+//   thresholds: {
+//     http_req_failed: ["rate<0.01"],
+//     http_req_duration: ["p(95)<1000"],
+//   },
 
-  gracefulStop: "30s",
+//   gracefulStop: "30s",
 
-  summaryTrendStats: ["avg", "med", "p(95)", "p(99)"],
-};
+//   summaryTrendStats: ["avg", "med", "p(95)", "p(99)"],
+// };
 
 export default function () {
   const url = "http://localhost:5000/api/v1/user/cars?page=1&limit=10";

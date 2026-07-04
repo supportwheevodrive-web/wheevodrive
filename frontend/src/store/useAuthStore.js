@@ -18,7 +18,7 @@ export const useAuthStore = create((set, get) => ({
   isUpdatingProfile: false,
   isCheckingAuth: true,
   onlineUsers: [],
-  socket: null,
+  // socket: null,
 
   checkAuth: async () => {
     try {
@@ -28,7 +28,7 @@ export const useAuthStore = create((set, get) => ({
 
         if (res && res.status == 200) {
           set({ authUser: res.data.user });
-          get().connectSocket();
+          // get().connectSocket();
         }
       }
     } catch (error) {
@@ -46,7 +46,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
 
       toast.success("Account created successfully");
-      get().connectSocket();
+      // get().connectSocket();
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -62,7 +62,7 @@ export const useAuthStore = create((set, get) => ({
       if (res?.data?.user) {
         set({ authUser: res?.data?.user });
         localStorage.setItem("token", res.data.user.token);
-        get().connectSocket();
+        // get().connectSocket();
         return true;
       } else {
         return false;
@@ -84,7 +84,7 @@ export const useAuthStore = create((set, get) => ({
       await axiosInstance.post("/api/v1/user/logout");
       set({ authUser: null });
       toast.success("Logged out successfully");
-      get().disconnectSocket();
+      // get().disconnectSocket();
       window.location.reload();
     } catch (error) {
       toast.error(error.response.data.message);
@@ -114,27 +114,27 @@ export const useAuthStore = create((set, get) => ({
     //   get().disconnectSocket();
     // }
 
-    const socket = io(BACKEND_URL, {
-      auth: {
-        token: localStorage.getItem("token"),
-      },
-      query: {
-        userId: authUser._id,
-      },
-    });
+    // const socket = io(BACKEND_URL, {
+    //   auth: {
+    //     token: localStorage.getItem("token"),
+    //   },
+    //   query: {
+    //     userId: authUser._id,
+    //   },
+    // });
 
-    socket.on("connect", () => {
-      set({ socket });
-    });
+    // socket.on("connect", () => {
+    //   set({ socket });
+    // });
 
-    socket.on("disconnect", () => {
-      // Disconnected
-    });
+    // socket.on("disconnect", () => {
+    //   // Disconnected
+    // });
 
-    socket.on("getOnlineUsers", (userIds) => {
-      set({ onlineUsers: userIds });
-    });
+    // socket.on("getOnlineUsers", (userIds) => {
+    //   set({ onlineUsers: userIds });
+    // });
 
-    set({ socket });
+    // set({ socket });
   },
 }));

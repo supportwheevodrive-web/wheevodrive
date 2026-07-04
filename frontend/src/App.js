@@ -31,20 +31,17 @@ import ContactScreen from "./screens/ContactScreen/ContactScreen";
 import PremiumPlans from "./components/PremiumPlans/PremiumPlans";
 import PaymentScreen from "./screens/PaymentScreen/PaymentScreen";
 import PaymentSuccess from "./screens/PaymentSuccess/PaymentSuccess";
+import Services from "./screens/Services/Services";
+import FAQSection from "./sections/FAQ/FAQ";
+import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
+import TermsAndConditions from "./screens/TermsAndConditions/TermsAndConditions";
 
 function Layout() {
   const location = useLocation();
   const hideHeaderFooter = ["/signin", "/signup", "/forgot-password"].includes(
     location.pathname
   );
-  const { authUser, checkAuth, isCheckingAuth, onlineUsers, connectSocket } =
-    useAuthStore();
-
-  useEffect(() => {
-    checkAuth().then(() => {
-      connectSocket();
-    });
-  }, [checkAuth, connectSocket]);
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   // const [loggedIn, setLoggedIn] = useState(false);
 
@@ -92,6 +89,13 @@ function Layout() {
             />
             <Route path="/contact-us" element={<ContactScreen />} />
             <Route path="/payment-success/:plan" element={<PaymentSuccess />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/faqs" element={<FAQSection />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsAndConditions />}
+            />
           </Routes>
           {!hideHeaderFooter && <Footer />}
           <BackToTop />

@@ -335,12 +335,15 @@ function DetailsScreen() {
           </div>
 
           <div className="dc-cta-group">
-            <a
-              href={`tel:${car?.dealer_id?.phone}`}
+            <button
+              type="button"
               className="dc-btn dc-btn-primary"
+              onClick={() => {
+                window.location.href = `tel:${car?.dealer_id?.phone}`;
+              }}
             >
               <FaPhone /> Call Seller
-            </a>
+            </button>
             {car?.dealer_id?._id !== user?._id && (
               <>
                 <button
@@ -354,12 +357,12 @@ function DetailsScreen() {
                 >
                   <FaWhatsapp /> WhatsApp
                 </button>
-                <button
+                {/* <button
                   className="dc-btn dc-btn-ghost"
                   onClick={handleNavigatetoChat}
                 >
                   <FaEnvelope /> Chat
-                </button>
+                </button> */}
               </>
             )}
           </div>
