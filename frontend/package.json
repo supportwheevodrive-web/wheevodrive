@@ -20,6 +20,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.24.4",
     "axios": "^1.8.3",
+    "chart.js": "^4.5.1",
     "contentful": "^11.7.1",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
