@@ -10,6 +10,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://wheevodrivedev.netlify.app",
   "http://wheevodrive.com",
+  "https://wheevodrive.com",
 ];
 
 const corsOptions = {
