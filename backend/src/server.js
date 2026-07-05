@@ -27,10 +27,48 @@ const startServer = () => {
 // Check if running on Vercel
 const isVercel = process.env.VERCEL === "1" || process.env.NOW_REGION;
 
+// Check if running on Render
+const isRender =
+  process.env.RENDER === "true" || process.env.RENDER_EXTERNAL_URL;
+
 if (isVercel) {
   // Vercel mode: Just export the app as a serverless function
   console.log("Running on Vercel - Serverless mode");
   module.exports = app;
+} else if (isRender) {
+  // Render mode: NO clustering - Render handles scaling
+  console.log("Running on Render - Single instance mode");
+  console.log(`Memory limit: ${process.env.NODE_OPTIONS || "512MB"}`);
+
+  // Connect to database
+  db.connect();
+
+  // Start cron jobs (optional - be careful with memory)
+  // Crons(); // Uncomment if needed, but monitor memory
+
+  // Start server directly - NO clustering
+  const server = app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+
+  // Graceful shutdown
+  process.on("SIGTERM", () => {
+    console.log("SIGTERM received, closing server...");
+    server.close(() => {
+      console.log("Server closed");
+      process.exit(0);
+    });
+  });
+
+  process.on("uncaughtException", (err) => {
+    console.error("Uncaught Exception:", err);
+    server.close(() => process.exit(1));
+  });
+
+  process.on("unhandledRejection", (err) => {
+    console.error("Unhandled Rejection:", err);
+    server.close(() => process.exit(1));
+  });
 } else {
   // DigitalOcean/Local mode: Full cluster setup
   if (cluster.isMaster) {
