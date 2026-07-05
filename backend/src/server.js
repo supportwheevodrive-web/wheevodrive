@@ -24,31 +24,41 @@ const startServer = () => {
   return server;
 };
 
-if (cluster.isMaster) {
-  console.log(`Master ${process.pid} is running`);
-  console.log(`Starting ${os.cpus().length} workers...`);
+// Check if running on Vercel
+const isVercel = process.env.VERCEL === "1" || process.env.NOW_REGION;
 
-  db.connect();
-  Crons();
-
-  for (let i = 0; i < os.cpus().length; i++) {
-    cluster.fork();
-  }
-
-  cluster.on("exit", (worker, code, signal) => {
-    console.log(`Worker ${worker.process.pid} died`);
-    cluster.fork();
-  });
-
-  process.on("SIGINT", () => {
-    console.log("Master shutting down...");
-    for (const id in cluster.workers) {
-      cluster.workers[id].kill();
-    }
-    process.exit(0);
-  });
+if (isVercel) {
+  // Vercel mode: Just export the app as a serverless function
+  console.log("Running on Vercel - Serverless mode");
+  module.exports = app;
 } else {
-  db.connect();
-  Crons();
-  startServer();
+  // DigitalOcean/Local mode: Full cluster setup
+  if (cluster.isMaster) {
+    console.log(`Master ${process.pid} is running`);
+    console.log(`Starting ${os.cpus().length} workers...`);
+
+    db.connect();
+    Crons();
+
+    for (let i = 0; i < os.cpus().length; i++) {
+      cluster.fork();
+    }
+
+    cluster.on("exit", (worker, code, signal) => {
+      console.log(`Worker ${worker.process.pid} died`);
+      cluster.fork();
+    });
+
+    process.on("SIGINT", () => {
+      console.log("Master shutting down...");
+      for (const id in cluster.workers) {
+        cluster.workers[id].kill();
+      }
+      process.exit(0);
+    });
+  } else {
+    db.connect();
+    Crons();
+    startServer();
+  }
 }
