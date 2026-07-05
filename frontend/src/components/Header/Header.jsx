@@ -286,11 +286,8 @@ function Header() {
                     window.location.href = "/";
                   }}
                 >
-                  {/* <span className="car-part">Car</span>
-                  <span className="auras-part">Auras</span> */}
-                  <img src="/images/new_logo.png" />
+                  <img src="/images/new_logo.png" alt="Logo" />
                 </div>
-                {/* <div className="tagline">TRUSTED USED CARS SELL & BUY</div> */}
               </div>
 
               <div
@@ -329,6 +326,14 @@ function Header() {
                   >
                     <Mic />
                   </button>
+                  {isMobile && (
+                    <button
+                      className="mobile-search-close"
+                      onClick={toggleSearch}
+                    >
+                      <Close />
+                    </button>
+                  )}
                 </div>
 
                 {showResults && searchKey.trim() !== "" && (

@@ -124,7 +124,8 @@ import { check, sleep } from "k6";
 // };
 
 export default function () {
-  const url = "http://localhost:5000/api/v1/user/cars?page=1&limit=10";
+  // const url = "http://localhost:5000/api/v1/user/cars?page=1&limit=10";
+  const url = 'https://wheevodrive.onrender.com/api/v1/user/cars?page=1&limit=10'
 
   const res = http.get(url, {
     timeout: "10s",

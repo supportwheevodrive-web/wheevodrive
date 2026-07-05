@@ -66,7 +66,8 @@ function ContactScreen() {
         <div className="hero-inner">
           <span className="hero-tag">Contact Us</span>
           <h1>
-            We're here to help you <span>find your drive.</span>
+            We're here to help you{" "}
+            <span style={{ color: "#fff" }}>find your drive.</span>
           </h1>
           <p>
             Reach out to our experts for car valuations, test drives, or general
@@ -80,7 +81,7 @@ function ContactScreen() {
           <div className="sidebar-section">
             <h3>Contact Information</h3>
             <div className="contact-pills">
-              <div className="c-pill">
+              {/* <div className="c-pill">
                 <div className="pill-icon">
                   <FaPhoneAlt />
                 </div>
@@ -88,17 +89,17 @@ function ContactScreen() {
                   <label>Call us anytime</label>
                   <span>+91 90000 00000</span>
                 </div>
-              </div>
+              </div> */}
               <div className="c-pill">
                 <div className="pill-icon">
                   <FaEnvelope />
                 </div>
                 <div className="pill-text">
                   <label>Email Support</label>
-                  <span>info@WheevoDrive.com</span>
+                  <span>support.wheevodrive@gmail.com</span>
                 </div>
               </div>
-              <div className="c-pill">
+              {/* <div className="c-pill">
                 <div className="pill-icon">
                   <FaMapMarkerAlt />
                 </div>
@@ -106,7 +107,7 @@ function ContactScreen() {
                   <label>Main Showroom</label>
                   <span>Kochi, Kerala, India</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 

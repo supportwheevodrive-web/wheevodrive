@@ -1,13 +1,4 @@
-// export const BACKEND_URL =
-//   process.env.REACT_APP_ENV == "development"
-//     ? "http://localhost:5000"
-//     : process.env.REACT_APP_ENV == "production"
-//     ? "https://carauras-backend.onrender.com"
-//     : "https://carauras-backend.onrender.com";
-
-// export const BACKEND_URL = "http://localhost:5000";
-
-export const REACT_ENV = "production";
+export const REACT_ENV = "development";
 
 export const BACKEND_URL =
   REACT_ENV === "production"
