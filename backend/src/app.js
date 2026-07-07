@@ -11,6 +11,7 @@ const allowedOrigins = [
   "https://wheevodrivedev.netlify.app",
   "http://wheevodrive.com",
   "https://wheevodrive.com",
+  "https://www.wheevodrive.com",
 ];
 
 const corsOptions = {
