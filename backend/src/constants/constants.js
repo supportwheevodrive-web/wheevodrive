@@ -12,6 +12,7 @@ module.exports.SUBRIPTION_PLANS = {
       maxBoostCount: 0,
     },
     WHATSAPP_CONTACT_BUTTON: false,
+    amount: 0,
   },
   PRO: {
     TITLE: "Pro",
@@ -26,6 +27,7 @@ module.exports.SUBRIPTION_PLANS = {
       maxBoostCount: 5,
     },
     WHATSAPP_CONTACT_BUTTON: true,
+    amount: 99,
   },
   ELITE: {
     TITLE: "Elite",
@@ -40,6 +42,7 @@ module.exports.SUBRIPTION_PLANS = {
       maxBoostCount: 500,
     },
     WHATSAPP_CONTACT_BUTTON: true,
+    amount: 499,
   },
 };
 

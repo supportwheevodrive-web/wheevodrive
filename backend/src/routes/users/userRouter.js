@@ -48,6 +48,7 @@ const {
 const {
   createSubscription,
 } = require("../../controllers/users/createSubscription");
+const { verifyPayment } = require("../../controllers/users/verifyPayment");
 
 const router = express.Router();
 
@@ -120,5 +121,6 @@ router.post("/plan-confirmation/:id", updatePlanConfirmation);
 
 // Payment integration
 router.post("/create-subscription", createSubscription);
+router.post("/verify-payment", verifyPayment);
 
 module.exports = router;
