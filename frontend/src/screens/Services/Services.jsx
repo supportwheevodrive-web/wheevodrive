@@ -31,6 +31,7 @@ const Services = () => {
   }, [user]);
 
   const verifyPaymentOnBackend = async (paymentData) => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${BACKEND_URL}/api/v1/user/verify-payment`,
@@ -41,26 +42,38 @@ const Services = () => {
         }
       );
       const result = await response.json();
-      if (result.success) {
-        Swal.fire({
+      if (response.ok && result.success) {
+        await Swal.fire({
           icon: "success",
           title: "Payment Successful!",
           text: "Your subscription has been activated.",
         });
+        window.location.href = "/profile";
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Payment Verification Failed",
+          text:
+            result.message ||
+            "We could not verify your payment. Please contact support if you were charged.",
+        });
       }
     } catch (error) {
       console.error("Payment verification failed:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Payment Verification Failed",
+        text: "We could not verify your payment. Please contact support if you were charged.",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSubscribePlan = async (plan) => {
-    let amount = 0;
-    if (plan === SUBRIPTION_PLANS.PRO.TITLE) {
-      amount = SUBRIPTION_PLANS.PRO.amount;
-    } else if (plan === SUBRIPTION_PLANS.ELITE.TITLE) {
-      amount = SUBRIPTION_PLANS.ELITE.amount;
-    } else {
-      amount = 0;
+    if (!user) {
+      navigate("/signin");
+      return;
     }
 
     setIsLoading(true);
@@ -71,12 +84,16 @@ const Services = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            amount,
-            receipt: "order_rcpt_01",
+            plan,
+            userId: user._id,
+            receipt: `rcpt_${Date.now()}`,
           }),
         }
       );
       const order = await response.json();
+      if (!response.ok || !order.id) {
+        throw new Error(order.message || "Could not create payment order");
+      }
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -86,7 +103,7 @@ const Services = () => {
         description: "Subscription Payment",
         order_id: order.id,
         handler: function (response) {
-          verifyPaymentOnBackend(response);
+          verifyPaymentOnBackend({ ...response, plan, userId: user._id });
         },
         prefill: {
           name: user?.name || "John Doe",

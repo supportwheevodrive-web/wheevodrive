@@ -10,9 +10,11 @@ import Swal from "sweetalert2";
 const PremiumPlans = () => {
   const { error, isLoading: isRzrLoading, Razorpay } = useRazorpay();
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useContext(UserContext);
 
   const verifyPaymentOnBackend = async (paymentData) => {
     // POST paymentData to backend for verification
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${BACKEND_URL}/api/v1/user/verify-payment`,
@@ -23,26 +25,38 @@ const PremiumPlans = () => {
         }
       );
       const result = await response.json();
-      if (result.success) {
-        Swal.fire({
+      if (response.ok && result.success) {
+        await Swal.fire({
           icon: "success",
           title: "Payment Successful!",
           text: "Your subscription has been activated.",
         });
+        window.location.href = "/profile";
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Payment Verification Failed",
+          text:
+            result.message ||
+            "We could not verify your payment. Please contact support if you were charged.",
+        });
       }
     } catch (error) {
       console.error("Payment verification failed:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Payment Verification Failed",
+        text: "We could not verify your payment. Please contact support if you were charged.",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSubscribePan = async (plan) => {
-    let amount = 0;
-    if (plan === SUBRIPTION_PLANS.PRO.TITLE) {
-      amount = SUBRIPTION_PLANS.PRO.amount;
-    } else if (plan === SUBRIPTION_PLANS.ELITE.TITLE) {
-      amount = SUBRIPTION_PLANS.ELITE.amount;
-    } else {
-      amount = 0;
+    if (!user) {
+      window.location.href = "/signin";
+      return;
     }
 
     setIsLoading(true);
@@ -53,12 +67,16 @@ const PremiumPlans = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            amount,
-            receipt: "order_rcpt_01",
+            plan,
+            userId: user._id,
+            receipt: `rcpt_${Date.now()}`,
           }),
         }
       );
       const order = await response.json();
+      if (!response.ok || !order.id) {
+        throw new Error(order.message || "Could not create payment order");
+      }
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -68,12 +86,12 @@ const PremiumPlans = () => {
         description: "Subscription Payment",
         order_id: order.id,
         handler: function (response) {
-          verifyPaymentOnBackend(response);
+          verifyPaymentOnBackend({ ...response, plan, userId: user._id });
         },
         prefill: {
-          name: "John Doe",
-          email: "john@example.com",
-          contact: "9999999999",
+          name: user.username || "",
+          email: user.email || "",
+          contact: user.phone || "",
         },
         theme: {
           color: "#3399cc",
@@ -106,8 +124,6 @@ const PremiumPlans = () => {
       });
     }
   };
-
-  const { user } = useContext(UserContext);
 
   return (
     <div className="premium-plans-container mt-2">
